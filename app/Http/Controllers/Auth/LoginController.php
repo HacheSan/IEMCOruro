@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,4 +39,27 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function login(Request $request)
+    {  
+        $inputVal = $request->all();
+   
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+   
+        if(Auth::attempt(array('email' => $inputVal['email'], 'password' => $inputVal['password']))){
+            if (auth()->user()->role == '1') {
+                return redirect()->route('admin.home');
+            }else if(auth()->user()->role == '2'){
+                return redirect()->route('secre.home');
+            }else{
+                return redirect()->route('eco.home');
+            }
+        }else{
+            return redirect()->route('login')
+                ->with('error','Correo o clave son incorrectas ...');
+        }     
+    }
+
 }
