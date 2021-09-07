@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/eco', function(){
+Route::get('/', function(){
     return "Hola eco";
 })->name('eco.home');

@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/secre', function(){
+Route::get('/', function(){
     return "Hola secre";
 })->name('secre.home');
