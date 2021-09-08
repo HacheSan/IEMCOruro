@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -48,4 +49,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function adminlte_image()
+    {
+        $user = Auth::user();
+        if($user->foto != 'user.png'){
+            return 'https://picsum.photos/300/300';
+        }
+        return 'https://picsum.photos/300/300';
+        //return '/storage/users/'.$user->foto;
+        //return 'https://picsum.photos/300/300'; //{{ asset ('/storage/users/'.$user->foto)}}
+    }
+
+    public static function adminlte_desc()
+    {
+        return 'ADMINISTRADOR';
+    }
+    public function adminlte_profile_url()
+    {
+        return 'admin/profile';
+    }
 }

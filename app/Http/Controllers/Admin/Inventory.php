@@ -14,7 +14,7 @@ class Inventory extends Controller
      */
     public function index()
     {
-        //
+        return view('administrador.inventarios.index');
     }
 
     /**

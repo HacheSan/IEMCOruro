@@ -45,8 +45,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>IEMC</b> - Oruro',
+    'logo_img' => 'vendor/adminlte/dist/img/iemc2.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -65,11 +65,11 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_header' => true,
+    'usermenu_header_class' => 'bg-info',
+    'usermenu_image' => true,
+    'usermenu_desc' => true,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -237,39 +237,64 @@ return [
         ],
 
         // Sidebar items:
-        [
+        /* [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
-        ],
+        ], */
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
         [
-            'text' => 'Gestion Usuario',
+            'text' => 'Principal',
+            'route'  => 'admin.home',
+            'icon' => 'fas fa-fw fa-home',
+        ],
+        [
+            'text' => 'Usuarios',
             'route'  => 'admin.usuarios.index',
+            'icon' => 'fas fa-fw fa-users-cog',
+        ],
+        [
+            'text' => 'Miembros',
+            'route'  => 'admin.miembros.index',
             'icon' => 'fas fa-fw fa-users',
         ],
         [
+            'text' => 'Actividades',
+            'route'  => 'admin.actividades.index',
+            'icon' => 'fas fa-fw fa-book',
+        ],
+        [
+            'text' => 'Inventarios',
+            'route'  => 'admin.inventarios.index',
+            'icon' => 'fas fa-fw fa-warehouse',
+        ],
+        [
+            'text' => 'Economía',
+            'route'  => 'admin.economia.index',
+            'icon' => 'fas fa-fw fa-hand-holding-usd',
+        ],
+        /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        ], */
+        ['header' => 'Ajuste de Cuenta'],
         [
-            'text' => 'profile',
+            'text' => 'Mi perfil',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
+            'text' => 'Cambiar contraseña',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
-        [
+        /* [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -322,7 +347,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ], */
     ],
 
     /*

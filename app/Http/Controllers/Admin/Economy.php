@@ -14,7 +14,7 @@ class Economy extends Controller
      */
     public function index()
     {
-        //
+        return view('administrador.economia.index');
     }
 
     /**

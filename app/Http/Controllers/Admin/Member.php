@@ -14,7 +14,7 @@ class Member extends Controller
      */
     public function index()
     {
-        //
+        return view('administrador.miembros.index');
     }
 
     /**
