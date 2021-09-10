@@ -15,6 +15,15 @@ class CreateRecommendationsTable extends Migration
     {
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
+            $table->dateTime('date', $precision = 0);
+            $table->text('description');
+            $table->string('destiny');
+            //Foranea
+            $table->unsignedBigInteger('member_id');
+            $table->foreign('member_id')->references('id')->on('members')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

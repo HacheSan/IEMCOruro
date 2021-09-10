@@ -15,6 +15,15 @@ class CreateEconomiesTable extends Migration
     {
         Schema::create('economies', function (Blueprint $table) {
             $table->id();
+            $table->text('description');
+            $table->float('amount', 8, 2);
+            $table->dateTime('date', $precision = 0);
+            //Foranea
+            $table->unsignedBigInteger('type_id');
+            $table->foreign('type_id')->references('id')->on('box_types')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
