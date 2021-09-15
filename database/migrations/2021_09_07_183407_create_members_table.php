@@ -18,7 +18,7 @@ class CreateMembersTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('ci')->unique();
-            $table->string('gender')->unique();
+            $table->string('gender');
             $table->string('marital_status');
             $table->string('address');
             $table->string('status');
