@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class Member extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class Member extends Controller
      */
     public function index()
     {
-        return view('administrador.miembros.index');
+        $users = User::orderBy('id', 'desc')->get();
+        return view('administrador.usuarios.index',compact('users'));
     }
 
     /**

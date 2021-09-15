@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Activity extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class Activity extends Controller
      */
     public function index()
     {
-        return view('administrador.actividades.index');
+        return view('administrador.miembros.index');
     }
 
     /**
