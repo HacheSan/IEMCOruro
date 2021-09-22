@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -14,7 +15,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('administrador.miembros.index');
+        $members = Member::orderBy('id', 'desc')->get();
+        return view('administrador.miembros.index',compact('members'));
     }
 
     /**
@@ -24,7 +26,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('administrador.miembros.create');
     }
 
     /**
