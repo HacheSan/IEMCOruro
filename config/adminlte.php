@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>IEMC</b> - Oruro',
+    'logo' => '<b>IEMC</b> - ORURO',
     'logo_img' => 'vendor/adminlte/dist/img/iemc3.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

@@ -89,14 +89,14 @@
                     <form action="" method="get">
                         <div class="input-group mb-3 col-sm-12">
 
-                            <input type="text" name="text" id="search" class="form-control form-control-lg" placeholder="Escriba un nombre aquí para encontrar un antecedente (ej. Juan)" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="text" id="search" class="form-control form-control-sm" placeholder="Escriba para buscar (ej. Juan)" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-dark" type="submit" id="button-addon2"> <i class="fa fa-search"></i> Buscar</button>
+                                <button class="btn btn-dark btn-sm" type="submit" id="button-addon2"> <i class="fa fa-search"></i> Buscar</button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <table id="antecedentes1" class="table-striped table-bordered" style="width:100%">
+                <table id="TbMiembro" class="table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -196,7 +196,7 @@
         responsive: true,
         "language": {
             "lengthMenu": "Mostrar " +
-                '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                 '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
                 " registros por página",
             "zeroRecords": "No existe registros - discupa",
             "info": "Mostrando la pagina _PAGE_ de _PAGES_",
