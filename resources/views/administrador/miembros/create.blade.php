@@ -78,6 +78,7 @@
                     <div class="form-group">
                         <label for="phone">Teléfono</label>
                         <input class="form-control" placeholder="Teléfono o Celular" name="phone" type="text" required>
+
                     </div>
                     @error('phone')
                     <span class="text-danger">{{$message}}</span>
