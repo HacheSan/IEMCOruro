@@ -24,6 +24,7 @@
     <thead>
         <tr>
             <th>No</th>
+            <th>Opciones</th> 
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>CI</th>
@@ -41,12 +42,56 @@
         @foreach ($members as $row)
         <tr>
             <td>{{$row->id}}</td>
+            <td><a href="{{route('admin.miembros.edit',$row->id)}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+            <form action = "{{route('admin.miembros.destroy', $row->id)}}" method = "post">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
+            </form>
+            
+            </td>
+
             <td>{{$row->name}}</td>
             <td>{{$row->surname}}</td>
             <td>{{$row->ci}}</td>
-            <td>{{$row->status}}</td>
-            <td>{{$row->gender}}</td>
-            <td>{{$row->marital_status}}</td>
+            <td>
+                @switch($row->status)
+                @case(1)
+                    Bautizado
+                @break
+
+                @case(2)
+                    Entregado
+                @break
+
+                @default
+                    Niño Dedicado
+                @endswitch
+            </td>
+            <td>
+                @switch($row->gender)
+                @case(1)
+                    Hombre
+                @break
+
+                @default
+                    Mujer
+                @endswitch
+            </td>
+            <td>
+                @switch($row->marital_status)
+                @case(1)
+                    Casado/a
+                @break
+
+                @case(2)
+                    Soltero/a
+                @break
+
+                @default
+                <span class="badge bg-info">Viudo/a</span>
+                @endswitch
+            </td>
             <td>{{$row->address}}</td>
             <td>{{$row->post}}</td>
             <td>{{$row->phone}}</td>

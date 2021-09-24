@@ -15,7 +15,7 @@ class CreateEconomiesTable extends Migration
     {
         Schema::create('economies', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
+            $table->text('description',150);
             $table->float('amount', 8, 2);
             $table->dateTime('date', $precision = 0);
             //Foranea

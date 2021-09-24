@@ -17,7 +17,7 @@ class CreateRecommendationsTable extends Migration
             $table->id();
             $table->dateTime('date', $precision = 0);
             $table->text('description');
-            $table->string('destiny');
+            $table->string('destiny',20);
             //Foranea
             $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members')

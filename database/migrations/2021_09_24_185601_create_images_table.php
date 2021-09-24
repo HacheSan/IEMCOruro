@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoxTypesTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateBoxTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('box_types', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('type',50);
+            $table->string('image',150);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateBoxTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('box_types');
+        Schema::dropIfExists('images');
     }
 }

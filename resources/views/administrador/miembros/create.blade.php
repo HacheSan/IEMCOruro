@@ -39,23 +39,23 @@
                     @enderror
                     <div class="form-group">
                         <label for="status">Estado</label>
-                        <select class="form-control">
+                        <select class="form-control" name="status">
                             <option value="1">Bautizado</option>
                             <option value="2">Entregado</option>
-                            <option value="2">Niño Dedicado</option>
+                            <option value="3">Niño Dedicado</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="gender">Género</label>
-                        <select class="form-control">
+                        <select class="form-control" name="gender">
                             <option value="1">Hombre</option>
                             <option value="2">Mujer</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="marital_status">Estado Civil</label>
-                        <select class="form-control">
+                        <select class="form-control" name="marital_status">
                             <option value="1">Casado</option>
                             <option value="2">Soltero</option>
                             <option value="3">Viudo/a</option>
@@ -70,7 +70,7 @@
                     @enderror
                     <div class="form-group">
                         <label for="post">Cargo</label>
-                        <input class="form-control" placeholder="Cargo" name="post" type="text" required>
+                        <input class="form-control" placeholder="Cargo" name="post" type="text" value="Sin cargo" required>
                     </div>
                     @error('post')
                     <span class="text-danger">{{$message}}</span>
@@ -92,7 +92,7 @@
                    
                     <div class="form-group">
                         <label for="Imagen">Nombre Imagen</label>
-                        <input class="form-control" placeholder="Nombre de la imagen" name="imagen" id="imagen" readonly required>
+                        <input class="form-control" placeholder="Nombre de la imagen" name="image" id="imagen" required>
                     </div>
                     @error('imagen')
                     <span class="text-danger">{{$message}}</span>
