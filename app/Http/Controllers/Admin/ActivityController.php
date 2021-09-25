@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -14,7 +15,8 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return view('administrador.actividades.index');
+        $activities = Activity::orderBy('id', 'desc')->get();
+        return view('administrador.actividades.index',compact('activities'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        //
+        return view('administrador.actividades.create');
     }
 
     /**
@@ -35,7 +37,23 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validacion
+        /*$request->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'place'=>'required',
+            'date'=>'required',
+            'image'=>'required'
+        ]);*/
+        $actividad = Activity::create([
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'place'=>$request->place,
+            'date'=>$request->date,
+            'image'=>$request->image
+    
+        ]);
+        return redirect()->route('admin.actividades.index')->with('info', 'La actividad se creo Satisfactoriamente.');
     }
 
     /**
@@ -55,9 +73,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Activity $actividad)
     {
-        //
+        return view('administrador.actividades.edit', compact('actividad'));
     }
 
     /**
@@ -67,9 +85,11 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Activity $actividad)
     {
-        //
+        $actividad->update($request->all());
+        return redirect()->route('admin.actividades.index')->with('info', 'Los datos de la actividad se actualizó satisfactoriamente.');
+   
     }
 
     /**
@@ -78,8 +98,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Activity $actividad)
     {
-        //
+        $actividad->delete(); 
+        return redirect()->route('admin.actividades.index')->with('info', 'La se eliminó satisfactoriamente.');  
     }
 }

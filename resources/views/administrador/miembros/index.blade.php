@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Usuarios del sistema</h1>
+<h1>Miembros Registrados</h1>
 <!-- msg success -->
 @if(session('info'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
