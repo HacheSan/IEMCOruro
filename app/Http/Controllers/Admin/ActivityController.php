@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -19,11 +20,35 @@ class ActivityController extends Controller
         return view('administrador.actividades.index',compact('activities'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function actividadimagen(Request $request)
+    {
+        try {
+            $folderPath = public_path('storage/actividades/');
+
+            $image_parts = explode(";base64,", $request->image);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+
+            $imageName = uniqid() . '.png';
+
+            $imageFullPath = $folderPath . $imageName;
+
+            file_put_contents($imageFullPath, $image_base64);
+
+            $saveFile = new Image();
+            $saveFile->image = $imageName;
+            $saveFile->save();
+            $datos = array(
+                'image' => $imageName
+            );
+            //Devolvemos el array pasado a JSON como objeto
+
+            return json_encode($datos, JSON_FORCE_OBJECT);
+        } catch (\Exception $exception) {
+            return back()->withError($exception->getMessage())->withInput();
+        }
+    }
     public function create()
     {
         return view('administrador.actividades.create');
@@ -73,9 +98,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activity $actividad)
+    public function edit(Activity $actividade)
     {
-        return view('administrador.actividades.edit', compact('actividad'));
+        return view('administrador.actividades.edit', compact('actividade'));
     }
 
     /**
@@ -85,9 +110,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $actividad)
+    public function update(Request $request, Activity $actividade)
     {
-        $actividad->update($request->all());
+        $actividade->update($request->all());
         return redirect()->route('admin.actividades.index')->with('info', 'Los datos de la actividad se actualizó satisfactoriamente.');
    
     }
@@ -98,9 +123,9 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $actividad)
+    public function destroy(Activity $actividade)
     {
-        $actividad->delete(); 
+        $actividade->delete(); 
         return redirect()->route('admin.actividades.index')->with('info', 'La se eliminó satisfactoriamente.');  
     }
 }

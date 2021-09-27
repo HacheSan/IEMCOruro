@@ -20,40 +20,60 @@
     <a href="{{route('admin.actividades.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Miembro</a><!-- id="create_new" -->
     <!-- <a href="/importfile" class="pull-right btn btn-success"><i class="fas fa-file-import"></i> Import</a> -->
 </div><br>
-<table id="tabla_actividad" class="display nowrap" style="width:100%">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Opciones</th> 
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Lugar</th>
-            <th>Fecha</th>
-            <th>Foto</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($activities as $row)
-        <tr>
-            <td>{{$row->id}}</td>
-            <td><a href="{{route('admin.actividades.edit',$row->id)}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-            <form action = "{{route('admin.actividades.destroy', $row->id)}}" method = "post">
+<!-- /.card-header -->
+<div class="card-body">
+    @foreach ($activities as $row)
+    <hr class="featurette-divider">
+    @if($row->id % 2 == 0)
+    <div class="row featurette">
+
+        <div class="col-md-1">
+            <a class="btn btn-secondary btn-sm" href="{{route('admin.actividades.edit', $row->id)}}"><i class="fas fa-fw fa-edit"></i></a>
+            <form action="{{route('admin.actividades.destroy', $row->id)}}" method="post">
                 @csrf
                 @method('delete')
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
+                <button type="submit" onclick="return confirm('¿Seguro que quiere eliminar este registro?')" class="btn btn-danger btn-sm"><i class="fas fa-fw fa-trash"></i></button>
             </form>
-            
-            </td>
+        </div>
+        <div class="col-md-7">
+            <h2 class="featurette-heading text-center">{{$row->title}}</h2>
+            <span class="text-muted">{{$row->date}}</span>
+            <p class="lead">{{$row->description}}</p>
+            <p class="lead">{{$row->place}}</p>
+        </div>
+        <div class="col-md-4">
+            <img class="rounded-circle" src="{{ asset ('/storage/actividades/'.$row->image)}}" alt="" height="200">
 
-            <td>{{$row->title}}</td>
-            <td>{{$row->description}}</td>
-            <td>{{$row->place}}</td>
-            <td>{{$row->date}}</td>
-            <td>{{$row->image}}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+        </div>
+    </div>
+    @else
+    <div class="row featurette">
+        <div class="col-md-1 order-md-1">
+            <a class="btn btn-secondary btn-sm" href="{{route('admin.actividades.edit', $row->id)}}"><i class="fas fa-fw fa-edit"></i></a>
+            <form action="{{route('admin.actividades.destroy', $row->id)}}" method="post">
+                @csrf
+                @method('delete')
+                <button type="submit" onclick="return confirm('¿Seguro que quiere eliminar este registro?')" class="btn btn-danger btn-sm"><i class="fas fa-fw fa-trash"></i></button>
+            </form>
+        </div>
+        <div class="col-md-7 order-md-3">
+
+            <h2 class="featurette-heading text-center">{{$row->title}}</h2>
+            <span class="text-muted">{{$row->date}}</span>
+            <p class="lead">{{$row->description}}</p>
+            <p class="lead">{{$row->place}}</p>
+        </div>
+        <div class="col-md-4 order-md-2">
+            <img class="rounded-circle" src="{{ asset ('/storage/actividades/'.$row->image)}}" alt="" height="200">
+
+        </div>
+    </div>
+    @endif
+    @endforeach
+
+</div>
+<!-- /.card-body -->
+
 
 
 <!-- Modal -->
@@ -87,7 +107,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Opciones</th> 
+                            <th>Opciones</th>
                             <th>Título</th>
                             <th>Descripción</th>
                             <th>Lugar</th>
@@ -183,7 +203,7 @@
         responsive: true,
         "language": {
             "lengthMenu": "Mostrar " +
-                 '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
                 " registros por página",
             "zeroRecords": "No existe registros - discupa",
             "info": "Mostrando la pagina _PAGE_ de _PAGES_",
@@ -199,38 +219,6 @@
 
     $(document).ready(function() {
         $('#tabla_actividad').DataTable();
-    });
-</script>
-<script>
-    /*  When user click add user button */
-    $('#create_new').click(function() {
-        $('#btn-save').val("create-user");
-        $('#user_id').val('');
-        $('#userForm').trigger("reset");
-        $('#title').html("Nuevo Usario");
-        $('#my-modal').modal('show');
-    });
-
-
-    //validar password
-    $('#password, #confirm_password').on('keyup', function() {
-        if ($('#password').val() == '') {
-            $('#message').html('Sin datos').css('color', 'white');
-            $('#confirm_password').css("border-color", "red");
-        } else if ($('#confirm_password').val() == $('input[name="password"]').val() && $('#confirm_password').val().length > 5) {
-            //$('#confirm_password').css( 'border-color','green');
-            //$('#confirm_password').css("border-color", "green");
-            //element.classList.remove("borderRed");
-            var element = document.getElementById('confirm_password');
-            // element.style.removeAttribute("border");
-            element.style.border = "";
-            var element = document.getElementById('confirm_password');
-            element.style.border = "2px solid green";
-            $('#message').html('Correcto').css('color', 'green');
-        } else {
-            $('#message').html('Las contraseñas no coinciden o es menor a 5 caracteres').css('color', 'red');
-            $('#confirm_password').css("border-color", "red");
-        }
     });
 </script>
 @stop

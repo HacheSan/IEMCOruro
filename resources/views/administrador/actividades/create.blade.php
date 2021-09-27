@@ -47,7 +47,7 @@
                    
                     <div class="form-group">
                         <label for="imagen">Nombre Imagen</label>
-                        <input class="form-control" placeholder="Nombre de la imagen" name="image" id="imagen" required>
+                        <input class="form-control" placeholder="Nombre de la imagen" name="image" id="imagen" readonly required>
                     </div>
                     @error('imagen')
                     <span class="text-danger">{{$message}}</span>
@@ -131,8 +131,63 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
 @stop
 
 @section('js')
-<script> </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 200,
+                height: 200,
+                type: 'circle' //circle o square
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            }
+        });
+        $('#before_crop_image').on('change', function() {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function() {
+                    console.log('jQuery bind complete');
+                });
+            }
+            reader.readAsDataURL(this.files[0]);
+            $('#imageModel').modal('show');
+        });
+        $('.crop_image').click(function(event) {
+            $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+            }).then(function(response) {
+                $.ajax({
+                    url: "{{url('/admin/actividadimagen')}}",
+                    type: 'POST',
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        'image': response
+                    },
+                    success: function(data) {
+                        $('#imageModel').modal('hide');
+                        //alert('Crop image has been uploaded');
+                        var json = $.parseJSON(data); // create an object with the key of the array
+                        //console.log(json.nombrefoto);
+                        $('#idimag').attr("src", '/storage/actividades/' + json.image);
+                        $('#imagen').val(json.image);
+
+                    }
+                })
+            });
+        });
+
+    });
+</script>
 @stop

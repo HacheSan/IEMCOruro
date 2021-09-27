@@ -16,3 +16,5 @@ Route::resource('/miembros', MemberController::class)->names('admin.miembros');
 Route::resource('/actividades', ActivityController::class)->names('admin.actividades');
 Route::resource('/inventarios', InventoryController::class)->names('admin.inventarios');
 Route::resource('/economia', EconomyController::class)->names('admin.economia');
+
+Route::post('actividadimagen', [ActivityController::class, 'actividadimagen']);

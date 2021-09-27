@@ -11,7 +11,7 @@
 
     <div class="card-body">
 
-        <form class="form-horizontal" action="{{ route('admin.actividades.update', $actividad->id)}}" method="POST">
+        <form class="form-horizontal" action="{{ route('admin.actividades.update', $actividade->id)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="row bg-light text-dark">
@@ -19,21 +19,21 @@
                 <div class="col-md-6 mt-2">
                     <div class="form-group">
                         <label for="title">Título</label>
-                        <input class="form-control" value="{{$actividad->title}}" placeholder="Título" name="title" type="text" required>
+                        <input class="form-control" value="{{$actividade->title}}" placeholder="Título" name="title" type="text" required>
                     </div>
                     @error('title')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                     <div class="form-group">
                         <label for="description">Descripción</label>
-                        <input class="form-control" value="{{$actividad->description}}" placeholder="Descripcion" name="description" type="text" required>
+                        <input class="form-control" value="{{$actividade->description}}" placeholder="Descripcion" name="description" type="text" required>
                     </div>
                     @error('description')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                     <div class="form-group">
                         <label for="place">Lugar</label>
-                        <input class="form-control" value="{{$actividad->place}}" placeholder="Lugar de actividad" name="place" type="text" required>
+                        <input class="form-control" value="{{$actividade->place}}" placeholder="Lugar de actividad" name="place" type="text" required>
                     </div>
                     @error('place')
                     <span class="text-danger">{{$message}}</span>
@@ -41,7 +41,7 @@
                     
                     <div class="form-group">
                         <label for="date">Fecha de Actividad</label>
-                        <input class="form-control" value="{{$actividad->date}}" placeholder="Fecha de actividad" name="date" type="text" required>
+                        <input class="form-control" value="{{$actividade->date}}" placeholder="Fecha de actividad" name="date" type="text" required>
                     </div>
                     @error('date')
                     <span class="text-danger">{{$message}}</span>
@@ -49,7 +49,7 @@
                    
                     <div class="form-group">
                         <label for="imagen">Nombre Imagen</label>
-                        <input class="form-control" value="{{$actividad->image}}" placeholder="Nombre de la imagen" name="image" id="imagen" required>
+                        <input class="form-control" value="{{$actividade->image}}" placeholder="Nombre de la imagen" name="image" id="imagen" required>
                     </div>
                     @error('imagen')
                     <span class="text-danger">{{$message}}</span>
