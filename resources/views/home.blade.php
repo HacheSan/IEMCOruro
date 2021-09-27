@@ -13,7 +13,7 @@
         <div class="col-4" id="contant" title="Total miembros" data-toggle="tooltip" data-html="true">
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>2345</h3>
+                    <h3>345</h3>
                     <p><span>Cantidad total de miembros</span></p>
                 </div>
                 <div class="icon">
@@ -27,7 +27,7 @@
         <div class="col-4" id="preant" title="Activos" data-toggle="tooltip" data-html="true">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>24254</h3>
+                    <h3>240</h3>
                     <p><span>Cantidad de miembros activos </span></p>
                 </div>
                 <div class="icon">
@@ -38,7 +38,7 @@
         <div class="col-4" id="contpol" title="Saldo total en bolivianos " data-toggle="tooltip" data-html="true">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>23452</h3>
+                    <h3>1879 Bs.</h3>
                     <p><span>Saldo total</span></p>
                 </div>
                 <div class="icon">

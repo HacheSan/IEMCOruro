@@ -100,25 +100,25 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>CI</th>
-                            <th>Foto</th>
-                            <th>Nacido</th>
-                            <th>Nacionalidad</th>
-                            <th>Edad</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
                             <th>Genero</th>
+                            <th>Estado Civil</th>
+                            <th>Dirección</th>
+                            <th>Edad</th>
                         </tr>
                     </thead>
                     <tbody>
 
 
                         <tr>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
+                            <td>1</td>
+                            <td>Carlos</td>
+                            <td>Perez</td>
+                            <td>Hombre</td>
+                            <td>Casado</td>
+                            <td>Urb: San Fra</td>
+                            <td>34</td>
                         </tr>
 
                     </tbody>
@@ -128,7 +128,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-12 d-flex justify-content-center">
-                                <h4 class="text-center">Edwin CJ </h4>.
+                                <h4 class="text-center">Carlos Perez </h4>.
                             </div>
                         </div>
 

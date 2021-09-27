@@ -13,8 +13,8 @@
             <div class="container">
                 <div class="carousel-caption text-left">
                     <h1>Iglesia Evangelica Monte Calvario - Oruro</h1>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                    <p>Con su PJ 458 18 - 19 -1999 Ubicada en Urb Pumas Andinos.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Registrate Hoy</a></p>
                 </div>
             </div>
         </div>
@@ -23,8 +23,8 @@
             <div class="container">
                 <div class="carousel-caption">
                     <h1>Iglesia Evangelica Monte Calvario - Oruro.</h1>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                    <p>CCon su PJ 458 18 - 19 -1999 Ubicada en Urb Pumas Andinos</p>
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Aprende Más</a></p>
                 </div>
             </div>
         </div>
@@ -33,19 +33,19 @@
             <div class="container">
                 <div class="carousel-caption text-right">
                     <h1>Iglesia Evangelica Monte Calvario - Oruro</h1>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                    <p>Con su PJ 458 18 - 19 -1999 Ubicada en Urb Pumas Andinos.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Navegar Por La Galeria</a></p>
                 </div>
             </div>
         </div>
     </div>
     <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+        <span class="sr-only">Anterior</span>
     </a>
     <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+        <span class="sr-only">Siguiente</span>
     </a>
 </div>
 
