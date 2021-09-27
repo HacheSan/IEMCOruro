@@ -57,7 +57,7 @@
 
 
 <!-- Modal -->
-<<div class="modal fade" id="my-modal" aria-hidden="true">
+<div class="modal fade" id="my-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -198,7 +198,7 @@
     });
 
     $(document).ready(function() {
-        $('#tablausuario').DataTable();
+        $('#tabla_actividad').DataTable();
     });
 </script>
 <script>
