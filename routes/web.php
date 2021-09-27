@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Activity;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $activities = Activity::orderBy('id', 'desc')->get();
+    return view('welcome', compact('activities'));
 });
 
 Auth::routes();
