@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class UsersSeed extends Seeder
 {
@@ -16,6 +17,8 @@ class UsersSeed extends Seeder
      */
     public function run()
     {
+        Storage::deleteDirectory('actividades');
+        Storage::makeDirectory('actividades');
         $user = [
             [
                 'name'=>'Hache Admin',
