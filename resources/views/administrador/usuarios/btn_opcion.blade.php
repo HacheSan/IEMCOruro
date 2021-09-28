@@ -1,0 +1,1 @@
+<button class="btn btn-info btn-sm" onclick="recid('{{$id}}','{{$name}}')"><i class="fas fa-plus"></i></button>

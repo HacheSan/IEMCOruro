@@ -86,53 +86,49 @@
 
                 <div class="card-body">
 
-                    <form action="" method="get">
+                    <form>
+                        @csrf
                         <div class="input-group mb-3 col-sm-12">
-
-                            <input type="text" name="text" id="search" class="form-control form-control-sm" placeholder="Escriba para buscar (ej. Juan)" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="text" id="miembroid" class="form-control form-control-sm" placeholder="Escriba para buscar (ej. Juan)" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-dark btn-sm" type="submit" id="button-addon2"> <i class="fa fa-search"></i> Buscar</button>
+                                <button class="btn btn-dark btn-sm buscarmiembro" type="submit" id="button-addon2"> <i class="fa fa-search"></i> Buscar</button>
                             </div>
                         </div>
                     </form>
+
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Seleccione un miembro</strong> en la caja de búsqueda para asignarle un rol
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <table id="TbMiembro" class="table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Opcion</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>CI</th>
+                                <th>Genero</th>
+                            </tr>
+                        </thead>
+                    </table>
+
                 </div>
-                <table id="TbMiembro" class="table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Genero</th>
-                            <th>Estado Civil</th>
-                            <th>Dirección</th>
-                            <th>Edad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-
-                        <tr>
-                            <td>1</td>
-                            <td>Carlos</td>
-                            <td>Perez</td>
-                            <td>Hombre</td>
-                            <td>Casado</td>
-                            <td>Urb: San Fra</td>
-                            <td>34</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <form id="userForm" name="userForm" class="form-horizontal" enctype="multipart/form-data">
-
+                <form class="form-horizontal" action="{{ route('admin.usuarios.store')}}" method="POST">
+                @csrf
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-12 d-flex justify-content-center">
-                                <h4 class="text-center">Carlos Perez </h4>.
+                                <h4 id="nombremiembo" class="text-center"></h4>
                             </div>
                         </div>
 
                     </div>
+                    <input type="text" id="idmiembro" name="id" value="0">
                     <div class="form-group row">
                         <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
@@ -155,15 +151,15 @@
                     <div class="form-group row">
                         <label for="Rol" class="col-sm-2 col-form-label">Rol</label>
                         <div class="form-check col-sm-3">
-                            <input class="form-check-input" type="radio" name="rol" value="1">
+                            <input class="form-check-input" type="radio" name="role" value="1">
                             <label class="form-check-label">Admin</label>
                         </div>
                         <div class="form-check col-sm-3">
-                            <input class="form-check-input" type="radio" name="rol" value="2">
+                            <input class="form-check-input" type="radio" name="role" value="2">
                             <label class="form-check-label">Secretario</label>
                         </div>
                         <div class="form-check col-sm-3">
-                            <input class="form-check-input" type="radio" name="rol" checked="" value="3">
+                            <input class="form-check-input" type="radio" name="role" checked="" value="3">
                             <label class="form-check-label">Tesorero</label>
                         </div>
                     </div>
@@ -196,7 +192,7 @@
         responsive: true,
         "language": {
             "lengthMenu": "Mostrar " +
-                 '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
                 " registros por página",
             "zeroRecords": "No existe registros - discupa",
             "info": "Mostrando la pagina _PAGE_ de _PAGES_",
@@ -214,6 +210,87 @@
         $('#tablausuario').DataTable();
     });
 </script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(".buscarmiembro").click(function(e) {
+        e.preventDefault();
+        var _token = $("input[name='_token']").val();
+        var miembro = $("#miembroid").val();
+        var url = "{{route('admin.buscarmiembro')}}";
+        //$('#modalYear').modal('hide');
+        mytable(url, 'post', miembro);
+    });
+    function mytable(url, type, miembro) {
+        var table = $('#TbMiembro').DataTable({
+            processing: true,
+            //serverSide: true,
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+
+            "language": {
+                "lengthMenu": "Mostrar " +
+                    '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                    " registros por página",
+                "zeroRecords": "No existe registros - discupa",
+                "info": "Mostrando la pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "No records available",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+
+            "ajax": {
+                "url": url,
+                type: type,
+                data: {
+                    miembro: miembro,
+                },
+                cache: false,
+
+            },
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'detalle',
+                    name: 'detalle',
+                    orderable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                    orderable: false
+                },
+                {
+                    data: 'surname',
+                    name: 'surname'
+                },
+                {
+                    data: 'ci',
+                    name: 'ci'
+                },
+                {
+                    data: 'gender',
+                    name: 'gender'
+                },
+            ],
+            order: [
+                [0, 'desc']
+            ]
+        });
+        
+    }
+</script>
+
 <script>
     /*  When user click add user button */
     $('#create_new').click(function() {
@@ -245,5 +322,11 @@
             $('#confirm_password').css("border-color", "red");
         }
     });
+</script>
+<script>
+    function recid(id, nombre){
+        $("#idmiembro").val(id);
+        document.getElementById('nombremiembo').innerHTML = nombre;
+    }
 </script>
 @stop

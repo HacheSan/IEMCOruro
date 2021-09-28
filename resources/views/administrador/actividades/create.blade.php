@@ -11,7 +11,7 @@
 
     <div class="card-body">
 
-        <form class="form-horizontal" action="{{ route('admin.actividades.store')}}" method="POST">
+        <form class="form-horizontal" action="{{ route('admin.usuarios.store')}}" method="POST">
             @csrf
             <div class="row bg-light text-dark">
 

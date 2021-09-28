@@ -18,3 +18,6 @@ Route::resource('/inventarios', InventoryController::class)->names('admin.invent
 Route::resource('/economia', EconomyController::class)->names('admin.economia');
 
 Route::post('actividadimagen', [ActivityController::class, 'actividadimagen']);
+
+Route::get('search', [UserController::class, 'search'])->name('admin.search');
+Route::post('buscarmiembro', [App\Http\Controllers\Admin\UserController::class, 'buscarmiembro'])->name('admin.buscarmiembro');
