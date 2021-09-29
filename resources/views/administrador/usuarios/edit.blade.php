@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Crear Actividad</h1>
+<h1>Crear</h1>
 @stop
 
 @section('content')
@@ -11,48 +11,71 @@
 
     <div class="card-body">
 
-        <form class="form-horizontal" action="{{ route('admin.actividades.store')}}" method="POST">
+        <form class="form-horizontal" action="{{ route('admin.usuarios.update', $usuario->id)}}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row bg-light text-dark">
 
                 <div class="col-md-6 mt-2">
                     <div class="form-group">
-                        <label for="title">Título</label>
-                        <input class="form-control" placeholder="Título" name="title" type="text" required>
+                        <label for="name">Nombre</label>
+                        <input class="form-control" value="{{$usuario->name}}" placeholder="Nombre" name="name" type="text" required>
                     </div>
-                    @error('title')
-                    <span class="text-danger">{{$message}}</span>
-                    @enderror
-                     <div class="form-group">
-                        <label>Descripción</label>
-                        <textarea class="form-control" rows="3" placeholder="Descripcion de la Actividad" name="description" required></textarea>
-                    </div>
-                    @error('description')
+                    @error('name')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                     <div class="form-group">
-                        <label for="place">Lugar</label>
-                        <input class="form-control" placeholder="Lugar" name="place" type="text" required>
+                        <label for="surname">Apellidos</label>
+                        <input class="form-control" value="{{$usuario->surname}}" placeholder="Apellido Paterno Materno" name="surname" type="text" required>
                     </div>
-                    @error('place')
+                    @error('surname')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                     <div class="form-group">
-                        <label for="date">Fecha de Actividad</label>
-                        <input class="form-control" placeholder="Fecha de Actividad" name="date" type="text" required>
+                        <label for="gender">Género</label>
+                        <select class="form-control" name="gender">
+                            <option value="1">Hombre</option>
+                            <option value="2">Mujer</option>
+                        </select>
                     </div>
-                    @error('date')
+                    <div class="form-group">
+                        <label for="marital_status">Estado Civil</label>
+                        <select class="form-control" name="marital_status">
+                            <option value="1">Casado</option>
+                            <option value="2">Soltero</option>
+                            <option value="3">Viudo/a</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Dirección</label>
+                        <input class="form-control" value="{{$usuario->address}}" placeholder="Dirección" name="address" type="text" required>
+                    </div>
+                    @error('address')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
-                   
+                    <div class="form-group">
+                        <label for="status">Estado</label>
+                        <select class="form-control" name="status">
+                            <option value="1">Bautizado</option>
+                            <option value="2">Entregado</option>
+                            <option value="3">Niño Dedicado</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="imagen">Nombre Imagen</label>
-                        <input class="form-control" placeholder="Nombre de la imagen" name="image" id="imagen" readonly required>
+                        <input class="form-control" value="{{$usuario->image}}" placeholder="Nombre de la imagen" name="image" id="imagen" required>
                     </div>
                     @error('imagen')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
-
+                    <div class="form-group">
+                        <label for="role">Rol</label>
+                        <select class="form-control" name="role">
+                            <option value="1">ADMINISTRADOR</option>
+                            <option value="2">SECRETARIO</option>
+                            <option value="3">TESORERO</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-6 mt-2">
                     <div class="card bg-light text-dark">
@@ -131,63 +154,8 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" />
 @stop
 
 @section('js')
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $image_crop = $('#image_demo').croppie({
-            enableExif: true,
-            viewport: {
-                width: 200,
-                height: 200,
-                type: 'circle' //circle o square
-            },
-            boundary: {
-                width: 300,
-                height: 300
-            }
-        });
-        $('#before_crop_image').on('change', function() {
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                $image_crop.croppie('bind', {
-                    url: event.target.result
-                }).then(function() {
-                    console.log('jQuery bind complete');
-                });
-            }
-            reader.readAsDataURL(this.files[0]);
-            $('#imageModel').modal('show');
-        });
-        $('.crop_image').click(function(event) {
-            $image_crop.croppie('result', {
-                type: 'canvas',
-                size: 'viewport'
-            }).then(function(response) {
-                $.ajax({
-                    url: "{{url('/admin/actividadimagen')}}",
-                    type: 'POST',
-                    data: {
-                        '_token': $('meta[name="csrf-token"]').attr('content'),
-                        'image': response
-                    },
-                    success: function(data) {
-                        $('#imageModel').modal('hide');
-                        //alert('Crop image has been uploaded');
-                        var json = $.parseJSON(data); // create an object with the key of the array
-                        //console.log(json.nombrefoto);
-                        $('#idimag').attr("src", '/storage/actividades/' + json.image);
-                        $('#imagen').val(json.image);
-
-                    }
-                })
-            });
-        });
-
-    });
-</script>
+<script> </script>
 @stop

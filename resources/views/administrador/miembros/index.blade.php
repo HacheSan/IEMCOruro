@@ -48,7 +48,7 @@
                 @method('delete')
                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
             </form>
-            
+
             </td>
 
             <td>{{$row->name}}</td>

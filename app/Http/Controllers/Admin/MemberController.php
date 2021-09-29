@@ -39,18 +39,52 @@ class MemberController extends Controller
     {
         //Validacion
         $request->validate([
-            'name'=>'required',
-            'surname'=>'required',
-            'ci'=>'required',
+            'name'=>'required|max:50',
+            'surname'=>'required|max:50',
+            'ci'=>'required|unique:members|max:15',
             'gender'=>'required',
             'marital_status'=>'required',
             'address'=>'required',
             'status'=>'required',
-            'phone'=>'required',
-            'date_of_birth'=>'required',
-            'image'=>'required',
+            'phone'=>'required|max:15',
+            'date_of_birth'=>'required|max:15',
+            'image'=>'required',//|dimensions:min_width-150,min_height-150',
             'post'=>'required',
         ]);
+        /*public function messages()
+        {
+            return[
+                'name.requerid'=>'El campo es requerido',
+                'name.max'=>'Solo permite 50 caracteres',
+
+                'surname.requerid'=>'El campo es requerido',
+                'surname.max'=>'Solo permite 50 caracteres',
+
+                'ci.requerid'=>'El campo es requerido',
+                'ci.unique'=>'la Cedula de Idnetidad ya esta registrado',
+                'ci.max'=>'Solo permite 15 caracteres',
+                'ci.min'=>'Solo permite 7 caracteres minimo',
+    
+                'gemder.requerid'=>'El campo es requerido',
+
+                'marital_status.requerid'=>'El campo es requerido',
+
+                'status.requerid'=>'El campo es requerido',
+
+                'phone.requerid'=>'El campo es requerido',
+                'phone.max'=>'Solo permite 15 caracteres',
+                'phone.min'=>'Solo permite 8 caracteres minimo',
+
+                'date_of_birth.requerid'=>'El campo es requerido',
+                'date_of_birth.max'=>'Solo permite 15 caracteres',
+
+                'image.requerid'=>'El campo es requerido',
+                'image.dimensions'=>'Solo se permite imagen de 150x150',
+    
+                'post.requerid'=>'El campo es requerido',
+                
+            ];
+        }*/
         
        $member = Member::create([
             'name'=>$request->name,

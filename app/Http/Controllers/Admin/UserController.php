@@ -71,7 +71,7 @@ class UserController extends Controller
 
     public function create()
     {
-        //
+        //return view('administrador.usuarios.create');
     }
 
     /**
@@ -117,9 +117,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $usuario)
     {
-        //
+        return view('administrador.usuarios.edit', compact('usuario'));
     }
 
     /**
@@ -129,9 +129,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $usuario)
     {
-        //
+        $usuario->update($request->all());
+        return redirect()->route('admin.usuarios.index')->with('info', 'Los datos del Usuario se actualizó satisfactoriamente.');
+   
     }
 
     /**
@@ -140,8 +142,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $usuario)
     {
-        //
+        $usuario->delete(); 
+        return redirect()->route('admin.usuarios.index')->with('info', 'Los datos del usuario se eliminó satisfactoriamente.');  
     }
 }
