@@ -39,7 +39,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    public function login(Request $request)
+    public function login(Request $request) //blanca y negra
     {  
         $inputVal = $request->all();
    

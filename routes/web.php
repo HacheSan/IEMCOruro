@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*

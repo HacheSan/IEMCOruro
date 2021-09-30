@@ -24,7 +24,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Opciones</th> 
+            <th>Opciones</th>
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Rol</th>
@@ -42,13 +42,13 @@
         <tr>
             <td>{{$row->id}}</td>
             <td><a href="{{route('admin.usuarios.edit',$row->id)}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-            <form action = "{{route('admin.usuarios.destroy', $row->id)}}" method = "post">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
-            </form>
+                <form action="{{route('admin.usuarios.destroy', $row->id)}}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
+                </form>
             </td>
-            
+
             <td>{{$row->name}}</td>
             <td>{{$row->surname}}</td>
             <td>
@@ -65,24 +65,24 @@
                 <span class="badge bg-info">TESORERO</span>
                 @endswitch
             </td>
-             <td>
+            <td>
                 @switch($row->gender)
                 @case(1)
-                    Hombre
+                Hombre
                 @break
 
                 @default
-                    Mujer
+                Mujer
                 @endswitch
             </td>
-              <td>
+            <td>
                 @switch($row->marital_status)
                 @case(1)
-                    Casado/a
+                Casado/a
                 @break
 
                 @case(2)
-                    Soltero/a
+                Soltero/a
                 @break
 
                 @default
@@ -93,15 +93,15 @@
             <td>
                 @switch($row->status)
                 @case(1)
-                    Bautizado
+                Bautizado
                 @break
 
                 @case(2)
-                    Entregado
+                Entregado
                 @break
 
                 @default
-                    Niño Dedicado
+                Niño Dedicado
                 @endswitch
             </td>
             <td>{{$row->phone}}</td>
@@ -163,7 +163,7 @@
                 </div>
 
                 <form class="form-horizontal" action="{{ route('admin.usuarios.store')}}" method="POST">
-                @csrf
+                    @csrf
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-12 d-flex justify-content-center">
@@ -172,7 +172,7 @@
                         </div>
 
                     </div>
-                    <input type="text" id="idmiembro" name="id" value="0">
+                    <input type="text" id="idmiembro" name="id" value="0" hidden>
                     <div class="form-group row">
                         <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
@@ -232,27 +232,30 @@
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script>
     $.extend($.fn.dataTable.defaults, {
-        processing: true,
-        responsive: true,
+        processing: true
+        , responsive: true,
+
+
         "language": {
             "lengthMenu": "Mostrar " +
                 '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
-                " registros por página",
-            "zeroRecords": "No existe registros - discupa",
-            "info": "Mostrando la pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "No records available",
-            "infoFiltered": "(filtrado de _MAX_ registros totales)",
-            "search": "Buscar:",
-            "paginate": {
-                "next": "Siguiente",
-                "previous": "Anterior"
+                " registros por página"
+            , "zeroRecords": "No existe registros - discupa"
+            , "info": "Mostrando la pagina _PAGE_ de _PAGES_"
+            , "infoEmpty": "No records available"
+            , "infoFiltered": "(filtrado de _MAX_ registros totales)"
+            , "search": "Buscar:"
+            , "paginate": {
+                "next": "Siguiente"
+                , "previous": "Anterior"
             }
-        },
-    });
+        }
+    , });
 
     $(document).ready(function() {
         $('#tablausuario').DataTable();
     });
+
 </script>
 <script>
     $.ajaxSetup({
@@ -268,71 +271,77 @@
         //$('#modalYear').modal('hide');
         mytable(url, 'post', miembro);
     });
+
     function mytable(url, type, miembro) {
         var table = $('#TbMiembro').DataTable({
             processing: true,
             //serverSide: true,
-            responsive: true,
             autoWidth: false,
             destroy: true,
+            
+            paging: false,
+            ordering: false,
+            searching: false,
+            showing: false,
 
             "language": {
                 "lengthMenu": "Mostrar " +
                     '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
-                    " registros por página",
-                "zeroRecords": "No existe registros - discupa",
-                "info": "Mostrando la pagina _PAGE_ de _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "search": "Buscar:",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+                    " registros por página"
+                , "zeroRecords": "No existe registros - discupa"
+                , "info": "Mostrando la pagina _PAGE_ de _PAGES_"
+                , "infoEmpty": "No records available"
+                , "infoFiltered": "(filtrado de _MAX_ registros totales)"
+                , "search": "Buscar:"
+                , "paginate": {
+                    "next": "Siguiente"
+                    , "previous": "Anterior"
                 }
             },
 
             "ajax": {
-                "url": url,
-                type: type,
-                data: {
-                    miembro: miembro,
-                },
-                cache: false,
+                "url": url
+                , type: type
+                , data: {
+                    miembro: miembro
+                , }
+                , cache: false,
 
-            },
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data: 'detalle',
-                    name: 'detalle',
-                    orderable: false
-                },
-                {
-                    data: 'name',
-                    name: 'name',
-                    orderable: false
-                },
-                {
-                    data: 'surname',
-                    name: 'surname'
-                },
-                {
-                    data: 'ci',
-                    name: 'ci'
-                },
-                {
-                    data: 'gender',
-                    name: 'gender'
-                },
-            ],
-            order: [
+            }
+            , columns: [{
+                    data: 'id'
+                    , name: 'id'
+                }
+                , {
+                    data: 'detalle'
+                    , name: 'detalle'
+                    , orderable: false
+                }
+                , {
+                    data: 'name'
+                    , name: 'name'
+                    , orderable: false
+                }
+                , {
+                    data: 'surname'
+                    , name: 'surname'
+                }
+                , {
+                    data: 'ci'
+                    , name: 'ci'
+                }
+                , {
+                    data: 'gender'
+                    , name: 'gender'
+                }
+            , ]
+            , order: [
                 [0, 'desc']
             ]
         });
-        
+
     }
+
 </script>
 
 <script>
@@ -341,7 +350,7 @@
         $('#btn-save').val("create-user");
         $('#user_id').val('');
         $('#userForm').trigger("reset");
-        $('#title').html("Nuevo Usario");
+        $('#title').html("Nuevo Usuario");
         $('#my-modal').modal('show');
     });
 
@@ -366,11 +375,13 @@
             $('#confirm_password').css("border-color", "red");
         }
     });
+
 </script>
 <script>
-    function recid(id, nombre){
+    function recid(id, nombre) {
         $("#idmiembro").val(id);
         document.getElementById('nombremiembo').innerHTML = nombre;
     }
+
 </script>
 @stop

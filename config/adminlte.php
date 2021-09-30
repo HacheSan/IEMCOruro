@@ -258,8 +258,19 @@ return [
         ],
         [
             'text' => 'Miembros',
-            'route'  => 'admin.miembros.index',
             'icon' => 'fas fa-fw fa-users',
+            'submenu'=>[
+                [
+                    'text' => 'Registro Miembros',
+                    'route'  => 'admin.miembros.index',
+                    'icon' => 'fas fa-fw fa-user-tie',
+                ],
+                [
+                    'text' => 'Asistencia',
+                    'route'  => 'admin.asistencias.index',
+                    'icon' => 'fas fa-fw fa-clipboard-check',
+                ],
+            ],
         ],
         [
             'text' => 'Actividades',

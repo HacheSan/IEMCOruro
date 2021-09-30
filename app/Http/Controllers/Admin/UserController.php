@@ -22,7 +22,7 @@ class UserController extends Controller
         $userb = [];
         return view('administrador.usuarios.index',compact('users','userb'));
     }
-    public function search(Request $request)
+    public function search(Request $request) //caja blanca y negra
     {
         try {
             $term = 'Hache';
