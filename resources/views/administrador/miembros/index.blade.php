@@ -42,11 +42,11 @@
         @foreach ($members as $row)
         <tr>
             <td>{{$row->id}}</td>
-            <td><a href="{{route('admin.miembros.edit',$row->id)}}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+            <td><a href="{{route('admin.miembros.edit',$row->id)}}" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
             <form action = "{{route('admin.miembros.destroy', $row->id)}}" method = "post">
                 @csrf
                 @method('delete')
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
+                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
             </form>
 
             </td>
