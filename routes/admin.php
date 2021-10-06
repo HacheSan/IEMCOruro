@@ -27,3 +27,7 @@ Route::get('search', [UserController::class, 'search'])->name('admin.search');
 Route::post('buscarmiembro', [App\Http\Controllers\Admin\UserController::class, 'buscarmiembro'])->name('admin.buscarmiembro');
 Route::post('searchmember', [MemberController::class, 'searchMember'])->name('admin.searchmember');
 
+Route::post('tblassistance', [AssistanceController::class, 'tblAssistance'])->name('admin.tblassistance');
+Route::post('destroyassistance', [AssistanceController::class, 'destroyAssistance'])->name('admin.destroyassistance');
+
+

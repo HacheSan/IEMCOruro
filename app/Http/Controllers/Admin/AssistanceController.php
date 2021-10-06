@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\ActivityAssistance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AssistanceController extends Controller
 {
@@ -18,9 +19,37 @@ class AssistanceController extends Controller
     {
         //$activity_assistances = ActivityAssistance::orderBy('id', 'desc')->get();
         $activities = Activity::orderBy('id', 'desc')->get();
-        return view('administrador.asistencias.index',compact('activities')); //,compact('members')
+        return view('administrador.asistencias.index', compact('activities')); //,compact('members')
     }
-
+    public function tblAssistance(Request $request)
+    {
+        $activity_id = $request->activity_id;
+        if (request()->ajax()) {
+            return datatables()->of(DB::table('activity_assistances')
+                ->join('members', 'activity_assistances.member_id', '=', 'members.id')
+                ->where('activity_id', $activity_id)
+                ->get(array(
+                    'ci',
+                    'name',
+                    'surname',
+                    'gender',
+                    'member_id',
+                    'activity_id'
+                )))
+                ->addColumn('delete', 'administrador.asistencias.delete')
+                ->rawColumns(['delete'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+    public function destroyAssistance(Request $request)
+    {
+        $asistance = DB::table('activity_assistances')
+            ->where('activity_id', $request->activity_id)
+            ->where('member_id', $request->member_id)
+            ->delete();
+        return $asistance;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,8 +69,8 @@ class AssistanceController extends Controller
     public function store(Request $request)
     {
         $activity_assistances = ActivityAssistance::create([
-            'activity_id'=>$request->activity_id,
-            'member_id'=>$request->member_id,
+            'activity_id' => $request->activity_id,
+            'member_id' => $request->member_id,
         ]);
         return $activity_assistances;
     }
