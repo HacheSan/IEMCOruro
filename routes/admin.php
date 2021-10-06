@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EconomyController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Member;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Route as RoutingRoute;
 
@@ -24,4 +25,5 @@ Route::post('actividadimagen', [ActivityController::class, 'actividadimagen']);
 
 Route::get('search', [UserController::class, 'search'])->name('admin.search');
 Route::post('buscarmiembro', [App\Http\Controllers\Admin\UserController::class, 'buscarmiembro'])->name('admin.buscarmiembro');
+Route::post('searchmember', [MemberController::class, 'searchMember'])->name('admin.searchmember');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\ActivityAssistance;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class AssistanceController extends Controller
     public function index()
     {
         //$activity_assistances = ActivityAssistance::orderBy('id', 'desc')->get();
-        return view('administrador.asistencias.index'); //,compact('members')
+        $activities = Activity::orderBy('id', 'desc')->get();
+        return view('administrador.asistencias.index',compact('activities')); //,compact('members')
     }
 
     /**
@@ -37,7 +39,11 @@ class AssistanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $activity_assistances = ActivityAssistance::create([
+            'activity_id'=>$request->activity_id,
+            'member_id'=>$request->member_id,
+        ]);
+        return $activity_assistances;
     }
 
     /**

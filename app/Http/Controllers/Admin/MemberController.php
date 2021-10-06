@@ -149,4 +149,19 @@ class MemberController extends Controller
         $miembro->delete(); 
         return redirect()->route('admin.miembros.index')->with('info', 'Los datos del miembro se eliminó satisfactoriamente.');  
     }
+    //searchMember
+    public function searchMember(Request $request){
+        $findmember=Member::where('ci',$request->ci)->first();
+        if($findmember){
+            $data = array(
+                'id'=>$findmember->id,
+            );
+            return json_encode($data, JSON_FORCE_OBJECT);
+        }else{
+            $data = array(
+                'id'=>"0",
+            );
+            return json_encode($data, JSON_FORCE_OBJECT);
+        }
+    }
 }

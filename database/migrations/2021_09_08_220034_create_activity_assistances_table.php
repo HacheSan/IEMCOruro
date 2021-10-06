@@ -17,7 +17,7 @@ class CreateActivityAssistancesTable extends Migration
             $table->primary(['activity_id', 'member_id']);
             $table->unsignedBigInteger('activity_id');
             $table->unsignedBigInteger('member_id');
-            $table->dateTime('date', $precision = 0);
+            //$table->dateTime('date', $precision = 0);
             
             //Antecendentes
             

@@ -17,16 +17,16 @@
 @stop
 
 @section('content')
-<select class="custom-select mb-3 col-sm-3">
+<select class="custom-select mb-3 col-sm-3" name="activity_id" id="activityId" onchange="selectActivities()">
     <option selected>Buscar la actividad </option>
-    <option value="1">Actividad 1</option>
-    <option value="2">Actividad 2</option>
-    <option value="3">Actividad 3</option>
+    @foreach($activities as $row)
+        <option value="{{$row->id}}">{{$row->title}}</option>
+    @endforeach
 </select>
 
 <form class="form-inline mt-2 mt-md-0">
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <input class="form-control mr-sm-2" id="ci" type="text" placeholder="Buscar por CI" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" id="btnAddAssistance" type="button">Buscar</button>
 </form>
 
 <div class="row" style="padding: 3px 15px;">
@@ -58,29 +58,29 @@
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script>
     $.extend($.fn.dataTable.defaults, {
-        processing: true
-        , autoWidth: false
-        , paging: false
-        , ordering: false
-        , searching: false
-        , showing: false,
+        processing: true,
+        autoWidth: false,
+        paging: false,
+        ordering: false,
+        searching: false,
+        showing: false,
 
-        , responsive: true
-        , "language": {
+        responsive: true,
+        "language": {
             "lengthMenu": "Mostrar " +
                 '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
-                " registros por página"
-            , "zeroRecords": "No existe registros - discupa"
-            , "info": "Mostrando la pagina _PAGE_ de _PAGES_"
-            , "infoEmpty": "No records available"
-            , "infoFiltered": "(filtrado de _MAX_ registros totales)"
-            , "search": "Buscar:"
-            , "paginate": {
-                "next": "Siguiente"
-                , "previous": "Anterior"
+                " registros por página",
+            "zeroRecords": "No existe registros - discupa",
+            "info": "Mostrando la pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No records available",
+            "infoFiltered": "(filtrado de _MAX_ registros totales)",
+            "search": "Buscar:",
+            "paginate": {
+                "next": "Siguiente",
+                "previous": "Anterior"
             }
-        }
-    , });
+        },
+    });
 
     $(document).ready(function() {
         $('#tablAsistencia').DataTable();
@@ -89,13 +89,44 @@
 </script>
 <script>
     /*  When user click add user button */
-    $('#create_new').click(function() {
-        $('#btn-save').val("create-user");
-        $('#user_id').val('');
-        $('#userForm').trigger("reset");
-        $('#title').html("Nuevo Usario");
-        $('#my-modal').modal('show');
+    function selectActivities(){
+        //alert(activityId.value);
+    }
+    //Create assistance
+    $('#btnAddAssistance').click(function(){
+        var activity_id = activityId.value;
+        var ci = $('#ci').val();
+        $.ajax({
+            url: "{{route('admin.searchmember')}}",
+            type: 'POST',
+            data:{
+                '_token': $('meta[name="csrf-token"]').attr('content'),
+                'ci':ci,
+            },
+            success: function(data){
+                var json = $.parseJSON(data);
+                if(json.id=="0"){
+                    alert(ci+" No se encuentra registrado");
+                }else{
+                    $.ajax({
+                        url: "{{route('admin.asistencias.store')}}",
+                        type: 'POST',
+                        data:{
+                            '_token': $('meta[name="csrf-token"]').attr('content'),
+                            'activity_id':activity_id,
+                            'member_id': json.id
+                        },
+                        success: function(data){
+                            alert('todo bien');
+                        },
+                        error: function(errorThrown){
+                            alert(ci+" ya se encuentra registrado")
+                        }
+                    });
+                }
+            }
+        });
     });
-
+    
 </script>
 @stop
