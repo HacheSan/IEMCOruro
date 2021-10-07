@@ -30,4 +30,5 @@ Route::post('searchmember', [MemberController::class, 'searchMember'])->name('ad
 Route::post('tblassistance', [AssistanceController::class, 'tblAssistance'])->name('admin.tblassistance');
 Route::post('destroyassistance', [AssistanceController::class, 'destroyAssistance'])->name('admin.destroyassistance');
 
+Route::post('reportassistance', [AssistanceController::class, 'reportAssistance'])->name('admin.reportassistance');
 

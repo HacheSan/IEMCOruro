@@ -50,6 +50,9 @@ class AssistanceController extends Controller
             ->delete();
         return $asistance;
     }
+    public function reportAssistance(Request $request){
+
+    }
     /**
      * Show the form for creating a new resource.
      *
