@@ -101,7 +101,7 @@
                 <div class="col-md-4 mt-2">
                     <div class="form-group">
                         <label for="date_of_birth">Fecha de Nacimiento</label>
-                        <input class="form-control" placeholder="Fecha de nacimiento" name="date_of_birth" type="text" required>
+                        <input type="date" id="fecha" class="mt-2 form-control" placeholder="Fecha de nacimiento" name="date_of_birth" type="text" required>
                     </div>
                 </div>
                 @error('date_of_birth')

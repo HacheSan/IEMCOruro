@@ -39,7 +39,7 @@
                     @enderror
                     <div class="form-group">
                         <label for="date">Fecha de Actividad</label>
-                        <input class="form-control" placeholder="Fecha de Actividad" name="date" type="text" required>
+                        <input type="datetime-local" class="form-control" placeholder="Fecha de Actividad" name="date" type="text" required>
                     </div>
                     @error('date')
                     <span class="text-danger">{{$message}}</span>
