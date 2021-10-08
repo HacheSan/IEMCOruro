@@ -59,9 +59,9 @@ class AssistanceController extends Controller
         $ath = DB::table('activity_assistances')
             ->join('members', 'activity_assistances.member_id', '=', 'members.id')
             ->where('activity_assistances.activity_id', $request->activity_id)
-            ->where('members.gender', 1)
+            ->where('members.gender', 'Hombre')
             ->count();
-        $fath = Member::where('gender', '1')->count();
+        $fath = Member::where('gender', 'Hombre')->count();
         //Flight::where('active', 1)->count();
         $data = array(
             'ath' => $ath, //asistencia total hombres

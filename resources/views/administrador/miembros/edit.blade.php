@@ -50,8 +50,8 @@
                     <div class="form-group">
                         <label for="gender">Género</label>
                         <select class="form-control" name="gender">
-                            <option value="1">Hombre</option>
-                            <option value="2">Mujer</option>
+                            <option value="Hombre">Hombre</option>
+                            <option value="Mujer">Mujer</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -90,7 +90,7 @@
                     @error('date_of_birth')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
-                   
+
                     <div class="form-group">
                         <label for="imagen">Nombre Imagen</label>
                         <input class="form-control" value="{{$miembro->image}}" placeholder="Nombre de la imagen" name="image" id="imagen" required>

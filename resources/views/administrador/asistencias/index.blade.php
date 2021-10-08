@@ -46,11 +46,7 @@
             </thead>
         </table>
     </div>
-    <!--<p>Asistencia Hombres</p>
-                    <p>Asistencia Mujeres</p>
-                    <p>Falta Hombres</p>
-                    <p>Falta Mujeres</p>
-                    <p>Total Asistencia</p>-->
+
     <div>
         <table class="table-bordered" style="width:30%">
             <thead>
