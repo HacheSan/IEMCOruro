@@ -47,15 +47,15 @@
         </table>
     </div>
     <!--<p>Asistencia Hombres</p>
-                <p>Asistencia Mujeres</p>
-                <p>Falta Hombres</p>
-                <p>Falta Mujeres</p>
-                <p>Total Asistencia</p>-->
+                    <p>Asistencia Mujeres</p>
+                    <p>Falta Hombres</p>
+                    <p>Falta Mujeres</p>
+                    <p>Total Asistencia</p>-->
     <div>
         <table class="table-bordered" style="width:30%">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>REPORTE</th>
                     <th>Hombre</th>
                     <th>Mujer</th>
                 </tr>
@@ -63,17 +63,21 @@
             <tbody>
                 <tr>
                     <th scope="row">Asistencia</th>
-                    <td>100</td>
-                    <td>150</td>
+                    <td id="ath"></td>
+                    <td id="atm"></td>
                 </tr>
                 <tr>
                     <th scope="row">Falta</th>
-                    <td>50</td>
-                    <td>60</td>
+                    <td id="fath"></td>
+                    <td id="fatm"></td>
                 </tr>
                 <tr>
-                    <th scope="row">Total</th>
-                    <td colspan="2">300</td>
+                    <th scope="row">Total Asistencia Actividad</th>
+                    <td colspan="2" id="taa"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Total Miembros</th>
+                    <td colspan="2" id="trm"></td>
                 </tr>
             </tbody>
         </table>
@@ -91,25 +95,12 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
     <script>
-        /*  When user click add user button */
+        /*  When user click add user button EVENT onchange*/
         function selectActivities() {
-            //alert(activityId.value);
+            // alert(activityId.value);
             mytable(activityId.value);
-            //
-            $.ajax({
-                url: "{{ route('admin.asistencias.store') }}",
-                type: 'POST',
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content'),
-                    'activity_id': activityId.value
-                },
-                success: function(data) {
-                    //alert('todo bien');
-                },
-                error: function(errorThrown) {
-                    alert("jefe espere")
-                }
-            });
+            reportAssistance(activityId.value);
+
         }
         //Create assistance
         $('#btnAddAssistance').click(function() {
@@ -138,6 +129,7 @@
                             success: function(data) {
                                 //alert('todo bien');
                                 mytable(activity_id);
+                                reportAssistance(activity_id);
                             },
                             error: function(errorThrown) {
                                 alert(ci + " ya se encuentra registrado")
@@ -153,7 +145,32 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        //charge data report
+        function reportAssistance(activityId) {
+            $.ajax({
+                url: "{{ route('admin.reportassistance') }}",
+                type: 'POST',
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'activity_id': activityId
+                },
+                success: function(data) {
+                    var json = $.parseJSON(data);
+                    //alert(json.ath);
+                    $('#ath').html(json.ath);
+                    $('#atm').html(json.atm);
+                    $('#fath').html(json.fath);
+                    $('#fatm').html(json.fatm);
+                    $('#taa').html(json.taa);
+                    $('#trm').html(json.trm);
 
+                },
+                error: function(errorThrown) {
+                    alert("jefe espere")
+                }
+            });
+        }
+        //charge data table
         function mytable(activity_id) {
             var table = $('#tblAssistance').DataTable({
                 processing: true,
@@ -217,6 +234,7 @@
                     },
                     success: function(data) {
                         mytable(activity_id);
+                        reportAssistance(activity_id);
                     },
                     error: function(data) {
                         alert('Error:', data);

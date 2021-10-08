@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\ActivityAssistance;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +29,7 @@ class AssistanceController extends Controller
             return datatables()->of(DB::table('activity_assistances')
                 ->join('members', 'activity_assistances.member_id', '=', 'members.id')
                 ->where('activity_id', $activity_id)
+                //->whereRaw('price > IF(state = "TX", ?, 100)', [200])
                 ->get(array(
                     'ci',
                     'name',
@@ -50,8 +52,26 @@ class AssistanceController extends Controller
             ->delete();
         return $asistance;
     }
-    public function reportAssistance(Request $request){
-
+    public function reportAssistance(Request $request)
+    {
+        $trm = Member::count();
+        $taa = ActivityAssistance::where('activity_id', $request->activity_id)->count();
+        $ath = DB::table('activity_assistances')
+            ->join('members', 'activity_assistances.member_id', '=', 'members.id')
+            ->where('activity_assistances.activity_id', $request->activity_id)
+            ->where('members.gender', 1)
+            ->count();
+        $fath = Member::where('gender', '1')->count();
+        //Flight::where('active', 1)->count();
+        $data = array(
+            'ath' => $ath, //asistencia total hombres
+            'atm' => $taa-$ath, //asistencia total mujeres
+            'fath' => $fath-$ath,//(int)$trm-(int)$taa-(int)-((int)$taa-(int)$ath), //falta asistencia total hombres
+            'fatm' => ($trm-$fath)-($taa-$ath), //falta asistencia total hombres
+            'taa' => $taa, //total asistencia actividad
+            'trm' => $trm, //total registro miembros
+        );
+        return json_encode($data, JSON_FORCE_OBJECT);
     }
     /**
      * Show the form for creating a new resource.

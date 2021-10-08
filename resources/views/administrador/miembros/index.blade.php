@@ -24,7 +24,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Opciones</th> 
+            <th>Opciones</th>
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>CI</th>
@@ -69,14 +69,7 @@
                 @endswitch
             </td>
             <td>
-                @switch($row->gender)
-                @case(1)
-                    Hombre
-                @break
-
-                @default
-                    Mujer
-                @endswitch
+                {{$row->gender}}
             </td>
             <td>
                 @switch($row->marital_status)
@@ -228,7 +221,7 @@
     $.extend($.fn.dataTable.defaults, {
         processing: true,
         responsive: true,
-        
+
         "language": {
             "lengthMenu": "Mostrar " +
                  '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
