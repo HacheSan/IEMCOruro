@@ -270,6 +270,11 @@ return [
                     'route'  => 'admin.asistencias.index',
                     'icon' => 'fas fa-fw fa-clipboard-check',
                 ],
+                [
+                    'text' => 'Recojo Certificado',
+                    'route'  => 'admin.certificados.index',
+                    'icon' => 'fas fa-fw fa-user-tie',
+                ],
             ],
         ],
         [
