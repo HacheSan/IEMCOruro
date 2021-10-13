@@ -22,14 +22,37 @@
     <table id="tablaCertif" class="display nowrap" style="width:100%">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>No</th>
+                <th>Acciones</th>
+                <th>Miembro</th>
                 <th>Descripción</th>
+
                 <th>Fecha</th>
-                <th>Estado</th>
-                <th>Acción</th>
+                <th>Entregado</th>
             </tr>
         </thead>
+        <tbody>
+            @foreach ($certificates as $row)
+                <tr>
+                    <td>{{ $row->id }}</td>
+                    <td><button onclick="updateCetificate('{{$row->id}}')" class="btn btn-info btn-xs"><i
+                                class="fas fa-edit"></i></button>
+                        <form action="{{ route('admin.certificados.destroy', $row->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-xs"
+                                onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
+                        </form>
+
+                    </td>
+
+                    <td>{{ $row->member_id }}</td>
+                    <td>{{ $row->description }}</td>
+                    <td>{{ $row->date }}</td>
+                    <td>{{ $row->state }}</td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 
 
@@ -50,21 +73,24 @@
 
                     <div class="card-body">
 
-                        <form action="" method="get">
+                        <form action="{{ route('admin.certificados.store') }}" method="POST">
+                            @csrf
                             <div class="input-group mb-3 col-sm-12">
 
                                 <input type="text" name="text" id="search" class="form-control form-control-sm"
-                                    placeholder="Escriba para buscar (ej. Juan)" aria-label="Recipient's username"
-                                    aria-describedby="button-addon2">
+                                    placeholder="Escriba CI (Ej. 1234567)">
                                 <div class="input-group-append">
-                                    <button class="btn btn-dark btn-sm" type="submit" id="button-addon2"> <i
+                                    <button class="btn btn-dark btn-sm" onclick="searchMemberByCi()" id="button-addon2"> <i
                                             class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
+                            <input type="text" id="member_id" name="member_id" hidden>
                             <div class="form-group">
                                 <label>Descripción</label>
-                                <textarea class="form-control" rows="3" placeholder="Descripcion de recojo de certificado" name="description" required></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Descripcion de recojo de certificado"
+                                    name="description" required></textarea>
                             </div>
+                            <button class="btn btn-sm btn-primary" type="submit">Aceptar</button>
                         </form>
                     </div>
                 </div>
@@ -115,5 +141,42 @@
             $('#title').html("Nuevo Certificado");
             $('#my-modal').modal('show');
         });
+
+        function searchMemberByCi() {
+            var ci = $('#search').val();
+            $.ajax({
+                url: "{{ route('admin.searchmember') }}",
+                type: 'POST',
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'ci': ci,
+                },
+                success: function(data) {
+                    var json = $.parseJSON(data);
+                    if (json.id == "0") {
+                        alert(ci + " No se encuentra registrado");
+                    } else {
+                        $('#member_id').val(json.id);
+                    }
+                }
+            });
+        }
+        //Actualizar estado
+        function updateCetificate(id) {
+            if (confirm("Desea entregar el certificado !")) {
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('admin.certificados.updatecertificate') }}",
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        'id': id,
+                    },
+                    success: function(data) {
+                        url = "{{ route('admin.certificados.index') }}";
+                        location.reload(url);
+                    }
+                });
+            };
+        }
     </script>
 @stop

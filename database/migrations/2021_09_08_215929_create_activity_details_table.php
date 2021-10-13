@@ -14,19 +14,11 @@ class CreateActivityDetailsTable extends Migration
     public function up()
     {
         Schema::create('activity_details', function (Blueprint $table) {
-            $table->primary(['activity_id', 'member_id']);
-            $table->unsignedBigInteger('activity_id');
+            $table->id();
             $table->unsignedBigInteger('member_id');
-            $table->dateTime('date', $precision = 0);
-            
-            //Antecendentes
-            
-            $table->foreign('activity_id')->references('id')->on('activities')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            //Person
-            
+            $table->date('date');
+            $table->string('description');
+            $table->string('state',10);
             $table->foreign('member_id')->references('id')->on('members')
             ->constrained()
             ->onUpdate('cascade')

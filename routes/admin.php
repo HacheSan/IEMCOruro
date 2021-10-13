@@ -34,3 +34,6 @@ Route::post('destroyassistance', [AssistanceController::class, 'destroyAssistanc
 
 Route::post('reportassistance', [AssistanceController::class, 'reportAssistance'])->name('admin.reportassistance');
 
+Route::post('updatecertificate', [CertificateController::class, 'update'])->name('admin.certificados.updatecertificate');
+
+
