@@ -42,7 +42,7 @@ class CertificateController extends Controller
             'member_id' => $request->member_id,
             'description' => $request->description,
             'date' => $date,
-            'state' => "No",
+            'status' => "No",
         ]);
         return redirect()->route('admin.certificados.index')->with('info', 'Se entregó el certificado Satisfactoriamente.');
     }
@@ -80,7 +80,7 @@ class CertificateController extends Controller
     {
         $record = ActivityDetail::find($request->id);
         $record->update([
-            'state' => 'Si',
+            'status' => 'Si',
         ]);
         return redirect()->route('admin.certificados.index')->with('info', 'Entregado del certificado exitosa.');
     }

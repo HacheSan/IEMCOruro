@@ -12,6 +12,6 @@ class ActivityDetail extends Model
         'member_id',
         'description',
         'date',
-        'state'
+        'status'
     ];
 }

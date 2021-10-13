@@ -49,7 +49,7 @@
                     <td>{{ $row->member_id }}</td>
                     <td>{{ $row->description }}</td>
                     <td>{{ $row->date }}</td>
-                    <td>{{ $row->state }}</td>
+                    <td>{{ $row->status }}</td>
                 </tr>
             @endforeach
         </tbody>

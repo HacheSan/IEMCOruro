@@ -18,7 +18,7 @@ class CreateActivityDetailsTable extends Migration
             $table->unsignedBigInteger('member_id');
             $table->date('date');
             $table->string('description');
-            $table->string('state',10);
+            $table->string('status',10);
             $table->foreign('member_id')->references('id')->on('members')
             ->constrained()
             ->onUpdate('cascade')
