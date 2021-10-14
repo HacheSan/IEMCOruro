@@ -35,7 +35,7 @@
             @foreach ($certificates as $row)
                 <tr>
                     <td>{{ $row->id }}</td>
-                    <td><button onclick="updateCetificate('{{$row->id}}')" class="btn btn-info btn-xs"><i
+                    <td><button onclick="updateCetificate('{{ $row->id }}')" class="btn btn-info btn-xs"><i
                                 class="fas fa-edit"></i></button>
                         <form action="{{ route('admin.certificados.destroy', $row->id) }}" method="post">
                             @csrf
@@ -132,7 +132,7 @@
         });
 
         $(document).ready(function() {
-            $('#tablausuario').DataTable();
+            $('#tablaCertif').DataTable();
         });
     </script>
     <script>

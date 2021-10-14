@@ -33,7 +33,7 @@
         <!--<a href="{{ route('admin.miembros.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Miembro</a>-->
         <!-- <a href="/importfile" class="pull-right btn btn-success"><i class="fas fa-file-import"></i> Import</a> -->
     </div>
-    <div class="card">
+    <div class=" ">
         <table id="tblAssistance" class="display nowrap" style="width:100%">
             <thead>
                 <tr>
@@ -173,12 +173,26 @@
                 //serverSide: true,
                 responsive: true,
                 autoWidth: false,
-                paging: false,
-                ordering: false,
+                paging: true,
+                ordering: true,
                 searching: false,
-                showing: false,
+                showing: true,
                 destroy: true,
-                "bInfo": false,
+                "bInfo": true,
+                "language": {
+                    "lengthMenu": "Mostrar " +
+                        '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                        " registros por página",
+                    "zeroRecords": "No existe registros - discupa",
+                    "info": "Mostrando la pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No records available",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
 
                 "ajax": {
                     "url": "{{ route('admin.tblassistance') }}",
