@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
@@ -16,6 +17,9 @@ class CertificateController extends Controller
     public function index()
     {
         $certificates = ActivityDetail::orderBy('id', 'desc')->get();
+        $certificates = DB::table('members')
+            ->join('activity_details', 'members.id', '=', 'activity_details.member_id')
+            ->get();
         return view('administrador.certificados.index',compact('certificates'));
     }
 
@@ -91,9 +95,10 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ActivityDetail $activitydetail)
+    public function destroyCertificate($id)
     {
-        $activitydetail->delete();
-        return redirect()->route('admin.certificados.index')->with('info', 'Eliminación del certificado exitosa.');
+        $mensaje = ActivityDetail::findOrFail($id);
+        $mensaje->delete();
+        return redirect()->route('admin.certificados.index')->with('info', 'Eliminación del certificado exitosa. '.$mensaje);
     }
 }

@@ -15,10 +15,11 @@ class CreateActivityDetailsTable extends Migration
     {
         Schema::create('activity_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('member_id');
             $table->date('date');
             $table->string('description');
             $table->string('status',10);
+
+            $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members')
             ->constrained()
             ->onUpdate('cascade')

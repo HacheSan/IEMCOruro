@@ -15,8 +15,9 @@ class MemberController extends Controller
      */
     public function index()
     {
+        $now = date('Y-m-d');
         $members = Member::orderBy('id', 'desc')->get();
-        return view('administrador.miembros.index',compact('members'));
+        return view('administrador.miembros.index',compact('members','now'));
     }
 
     /**
@@ -64,7 +65,7 @@ class MemberController extends Controller
                 'ci.unique'=>'la Cedula de Idnetidad ya esta registrado',
                 'ci.max'=>'Solo permite 15 caracteres',
                 'ci.min'=>'Solo permite 7 caracteres minimo',
-    
+
                 'gemder.requerid'=>'El campo es requerido',
 
                 'marital_status.requerid'=>'El campo es requerido',
@@ -80,12 +81,12 @@ class MemberController extends Controller
 
                 'image.requerid'=>'El campo es requerido',
                 'image.dimensions'=>'Solo se permite imagen de 150x150',
-    
+
                 'post.requerid'=>'El campo es requerido',
-                
+
             ];
         }*/
-        
+
        $member = Member::create([
             'name'=>$request->name,
             'surname'=>$request->surname,
@@ -146,8 +147,8 @@ class MemberController extends Controller
      */
     public function destroy(Member $miembro)
     {
-        $miembro->delete(); 
-        return redirect()->route('admin.miembros.index')->with('info', 'Los datos del miembro se eliminó satisfactoriamente.');  
+        $miembro->delete();
+        return redirect()->route('admin.miembros.index')->with('info', 'Los datos del miembro se eliminó satisfactoriamente.');
     }
     //searchMember
     public function searchMember(Request $request){
@@ -155,6 +156,9 @@ class MemberController extends Controller
         if($findmember){
             $data = array(
                 'id'=>$findmember->id,
+                'name'=>$findmember->name,
+                'surname'=>$findmember->surname,
+                'ci'=>$findmember->ci,
             );
             return json_encode($data, JSON_FORCE_OBJECT);
         }else{

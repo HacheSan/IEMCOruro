@@ -35,7 +35,6 @@
             <th>Cargo</th>
             <th>Teléfono</th>
             <th>Edad</th>
-            <th>Foto</th>
         </tr>
     </thead>
     <tbody>
@@ -88,12 +87,12 @@
             <td>{{$row->address}}</td>
             <td>{{$row->post}}</td>
             <td>{{$row->phone}}</td>
-            <td>{{$row->date_of_birth}}</td>
-            <td>{{$row->image}}</td>
+            <td>{{(int)$now - (int)$row->date_of_birth}}</td>
         </tr>
         @endforeach
     </tbody>
 </table>
+
 
 
 <!-- Modal -->

@@ -35,18 +35,17 @@
             @foreach ($certificates as $row)
                 <tr>
                     <td>{{ $row->id }}</td>
-                    <td><button onclick="updateCetificate('{{ $row->id }}')" class="btn btn-info btn-xs"><i
-                                class="fas fa-edit"></i></button>
-                        <form action="{{ route('admin.certificados.destroy', $row->id) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger btn-xs"
-                                onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
-                        </form>
-
+                    <td>
+                        <button onclick="updateCetificate('{{ $row->id }}')" class="btn btn-info btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <a onclick="return confirm('¿Seguro quiere eliminar?')"
+                            href="{{ route('admin.deletecertconfirm', $row->id) }}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash-alt"></i>
+                        </a>
                     </td>
 
-                    <td>{{ $row->member_id }}</td>
+                    <td>{{ $row->name }} {{ $row->surname }}</td>
                     <td>{{ $row->description }}</td>
                     <td>{{ $row->date }}</td>
                     <td>{{ $row->status }}</td>
@@ -80,9 +79,14 @@
                                 <input type="text" name="text" id="search" class="form-control form-control-sm"
                                     placeholder="Escriba CI (Ej. 1234567)">
                                 <div class="input-group-append">
-                                    <button class="btn btn-dark btn-sm" onclick="searchMemberByCi()" id="button-addon2"> <i
-                                            class="fa fa-search"></i> Buscar</button>
+                                    <a class="btn btn-dark btn-sm" onclick="searchMemberByCi()" id="button-addon2">
+                                        <i class="fa fa-search"></i> Buscar
+                                    </a>
                                 </div>
+                            </div>
+                            <div class="alert alert-success" role="alert" id="findMember" style="display: none">
+                                <li>Nombres: <b id="nameMember"></b></li>
+                                <li>CI: <b id="ciMember"></b></li>
                             </div>
                             <input type="text" id="member_id" name="member_id" hidden>
                             <div class="form-group">
@@ -104,6 +108,13 @@
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <style>
+        table.dataTable thead tr {
+            background-color: rgb(49, 58, 55);
+            color: #fff;
+        }
+    </style>
 @stop
 
 @section('js')
@@ -156,7 +167,11 @@
                     if (json.id == "0") {
                         alert(ci + " No se encuentra registrado");
                     } else {
+
+                        document.getElementById('findMember').style.display = '';
                         $('#member_id').val(json.id);
+                        $('#nameMember').html(json.name+' '+json.surname);
+                        $('#ciMember').html(json.ci);
                     }
                 }
             });

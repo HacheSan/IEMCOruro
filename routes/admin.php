@@ -36,4 +36,6 @@ Route::post('reportassistance', [AssistanceController::class, 'reportAssistance'
 
 Route::post('updatecertificate', [CertificateController::class, 'update'])->name('admin.certificados.updatecertificate');
 
+Route::get('/admin/certificados/{id}/confirm', [CertificateController::class, 'destroyCertificate'])->name('admin.deletecertconfirm');
+
 
