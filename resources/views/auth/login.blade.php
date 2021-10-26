@@ -6,18 +6,18 @@
 		<div class="card">
 			<div class="card-header">
 				<h3>{{ __('Acceso a IEMC') }}</h3>
-				<div class="d-flex justify-content-end social_icon">
-					<span><i class="fab fa-facebook-square"></i></span>
-					<span><i class="fab fa-google-plus-square"></i></span>
-					<span><i class="fab fa-twitter-square"></i></span>
-				</div>
+				{{-- <div class="d-flex justify-content-end social_icon">
+					<span><i class="fa fa-facebook-square"></i></span>
+					<span><i class="fa fa-google-plus-square"></i></span>
+					<span><i class="fa fa-twitter-square"></i></span>
+				</div> --}}
 			</div>
 			<div class="card-body">
 				<form method="POST" action="{{ route('login') }}">
                     @csrf
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
+							<span class="input-group-text"><i class="fa fa-user"></i></span>
 						</div>
 						<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         @error('email')
@@ -28,7 +28,7 @@
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
+							<span class="input-group-text"><i class="fa fa-key"></i></span>
 						</div>
 						<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'IEMC-ORURO')
 
 @section('content_header')
     <h1>Registrar Asistencia</h1>
@@ -47,49 +47,62 @@
         </table>
     </div>
 
-    <div>
-        <table class="table-bordered" style="width:30%">
-            <thead>
-                <tr>
-                    <th>REPORTE</th>
-                    <th>Hombre</th>
-                    <th>Mujer</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Asistencia</th>
-                    <td id="ath"></td>
-                    <td id="atm"></td>
-                </tr>
-                <tr>
-                    <th scope="row">Falta</th>
-                    <td id="fath"></td>
-                    <td id="fatm"></td>
-                </tr>
-                <tr>
-                    <th scope="row">Total Asistencia Actividad</th>
-                    <td colspan="2" id="taa"></td>
-                </tr>
-                <tr>
-                    <th scope="row">Total Miembros</th>
-                    <td colspan="2" id="trm"></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="d-flex justify-content-center" id="statistic">
+
+        <div class="card-body col-md-6">
+            <h4>REPORTE DE ASISTENCIA</h4>
+            <table class="table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>REPORTE</th>
+                        <th>Hombre</th>
+                        <th>Mujer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Asistencia</th>
+                        <td id="ath"></td>
+                        <td id="atm"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Falta</th>
+                        <td id="fath"></td>
+                        <td id="fatm"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total Asistencia Actividad</th>
+                        <td colspan="2" id="taa"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total Miembros</th>
+                        <td colspan="2" id="trm"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 @stop
 
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/b-print-1.4.0/datatables.min.css" />
 @stop
 
 @section('js')
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <script src="//cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js'></script>
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/b-print-1.4.0/datatables.min.js">
+    </script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-
     <script>
         /*  When user click add user button EVENT onchange*/
         function selectActivities() {
@@ -175,7 +188,7 @@
                 autoWidth: false,
                 paging: true,
                 ordering: true,
-                searching: false,
+                searching: true,
                 showing: true,
                 destroy: true,
                 "bInfo": true,
@@ -193,7 +206,26 @@
                         "previous": "Anterior"
                     }
                 },
+                dom: 'Bfrtip',
+                buttons: [
+                    //'print',
+                    {
+                        extend: 'print',
+                        text: 'IMPRIMIR',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        customize: function(window) {
+                            $(window.document.body).children().eq(0).after($('#statistic').html());
+                        }
+                    },
 
+                    'colvis'
+
+                ],
+                columnDefs: [{
+                    visible: false
+                }],
                 "ajax": {
                     "url": "{{ route('admin.tblassistance') }}",
                     type: 'POST',
