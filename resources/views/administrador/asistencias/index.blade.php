@@ -104,7 +104,7 @@
     </script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script>
-        /*  When user click add user button EVENT onchange*/
+
         function selectActivities() {
             // alert(activityId.value);
             mytable(activityId.value);
