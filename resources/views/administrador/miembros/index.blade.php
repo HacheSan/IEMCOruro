@@ -43,13 +43,17 @@
             @foreach ($members as $row)
                 <tr>
                     <td>{{ $row->id }}</td>
-                    <td><a href="{{ route('admin.miembros.edit', $row->id) }}" class="btn btn-info btn-xs"><i
-                                class="fas fa-edit"></i></a>
+                    <td>
+                        <a href="{{ route('admin.miembros.edit', $row->id) }}" class="btn btn-info btn-xs"><i
+                                class="fas fa-edit"></i>
+                        </a>
                         <form action="{{ route('admin.miembros.destroy', $row->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger btn-xs"
-                                onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
+                                onclick="return confirm('¿Seguro quiere eliminar?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
 
                     </td>
@@ -117,6 +121,13 @@
         }
 
     </style>
+    <style>
+        table.dataTable thead tr {
+            background-color: rgb(49, 58, 55);
+            color: #fff;
+        }
+
+    </style>
 @stop
 
 @section('js')
@@ -155,7 +166,8 @@
                 //'print',
                 {
                     extend: 'print',
-                    text: 'IMPRIMIR',
+                    className: 'btn btn-primary',
+                    text: '<i class="fa fa-print"></i> Imprimir',
                     exportOptions: {
                         columns: ':visible'
                     },
@@ -170,7 +182,7 @@
                             //.removeClass('dataTable')
                             //.css('font-size', '12px')
                             .css('margin-top', '65px')
-                            //.css('margin-bottom', '60px')
+                        //.css('margin-bottom', '60px')
                     },
 
                 },
@@ -220,7 +232,15 @@
 
                 }, */
 
-                'colvis'
+                {
+                    extend: 'colvis',
+                    className: 'btn btn-primary',
+                    text: '<i class="fa fa-eye"></i> Columna Visible',
+
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                },
 
             ],
             columnDefs: [{

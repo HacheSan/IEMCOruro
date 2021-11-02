@@ -91,6 +91,13 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/b-print-1.4.0/datatables.min.css" />
+    <style>
+        table.dataTable thead tr {
+            background-color: rgb(49, 58, 55);
+            color: #fff;
+        }
+
+    </style>
 @stop
 
 @section('js')

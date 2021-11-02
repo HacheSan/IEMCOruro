@@ -273,7 +273,7 @@ return [
                 [
                     'text' => 'Recojo Certificado',
                     'route'  => 'admin.certificados.index',
-                    'icon' => 'fas fa-fw fa-user-tie',
+                    'icon' => 'fas fa-fw fa-address-book',
                 ],
             ],
         ],
