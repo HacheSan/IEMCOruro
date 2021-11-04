@@ -17,7 +17,7 @@
 
 @section('content')
     <div class="row" style="padding: 3px 15px;">
-        <a href="javascript:void(0)" class="btn btn-primary btn-sm" id="create_new"><i class="fas fa-plus"></i> Asignar
+        <a href="javascript:void(0)" class="btn btn-success btn-sm" id="create_new"><i class="fas fa-plus"></i> Asignar
             Rol</a>
         <!-- <a href="/importfile" class="pull-right btn btn-success"><i class="fas fa-file-import"></i> Import</a> -->
     </div><br>
@@ -42,12 +42,13 @@
             @foreach ($users as $row)
                 <tr>
                     <td>{{ $row->id }}</td>
-                    <td><a href="{{ route('admin.usuarios.edit', $row->id) }}" class="btn btn-info btn-sm"><i
-                                class="fas fa-edit"></i></a>
-                        <form action="{{ route('admin.usuarios.destroy', $row->id) }}" method="post">
+                    <td class="row d-flex justify-content-center"><a href="{{ route('admin.usuarios.edit', $row->id) }}"
+                            class="btn btn-outline-primary btn-sm"><i class="fas fa-edit"></i></a>
+                        <form class="ml-1" action="{{ route('admin.usuarios.destroy', $row->id) }}"
+                            method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-danger btn-sm"
+                            <button type="submit" class="btn btn-outline-danger btn-sm"
                                 onclick="return confirm('¿Seguro quiere eliminar?')"><i class="fas fa-trash"></i></button>
                         </form>
                     </td>
@@ -303,7 +304,6 @@
                 "language": {
                     "lengthMenu": "Mostrar registro por página " +
                         '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>',
-                    ,
                     "zeroRecords": "No existe registros - discupa",
                     "info": "Mostrando la pagina _PAGE_ de _PAGES_",
                     "infoEmpty": "No records available",

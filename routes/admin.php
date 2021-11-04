@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\AssistanceController;
+use App\Http\Controllers\Admin\BoxTypeController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\EconomyController;
 use App\Http\Controllers\Admin\InventoryController;
@@ -22,6 +23,7 @@ Route::resource('/inventarios', InventoryController::class)->names('admin.invent
 Route::resource('/economia', EconomyController::class)->names('admin.economia');
 Route::resource('/asistencias', AssistanceController::class)->names('admin.asistencias');
 Route::resource('/certificados', CertificateController::class)->names('admin.certificados');
+Route::resource('/cajas', BoxTypeController::class)->names('admin.cajas');
 
 Route::post('actividadimagen', [ActivityController::class, 'actividadimagen']);
 

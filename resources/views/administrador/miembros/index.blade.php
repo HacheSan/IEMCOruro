@@ -43,7 +43,7 @@
             @foreach ($members as $row)
                 <tr>
                     <td>{{ $row->id }}</td>
-                    <td>
+                    <td class="row">
                         <a href="{{ route('admin.miembros.edit', $row->id) }}" class="btn btn-info btn-xs"><i
                                 class="fas fa-edit"></i>
                         </a>

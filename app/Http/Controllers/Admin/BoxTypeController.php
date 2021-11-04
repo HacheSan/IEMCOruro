@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BoxType;
 use Illuminate\Http\Request;
 
-class EconomyController extends Controller
+class BoxTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class EconomyController extends Controller
      */
     public function index()
     {
-        $boxtypes = BoxType::get();
-        return view('administrador.economia.index', compact('boxtypes'));
+        //
     }
 
     /**
@@ -26,7 +25,7 @@ class EconomyController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -37,7 +36,10 @@ class EconomyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $boxtype = BoxType::create([
+            'type'=>$request->caja,
+        ]);
+        return redirect()->route('admin.economia.index')->with('info', 'Caja creada satisfactoriamente.');
     }
 
     /**

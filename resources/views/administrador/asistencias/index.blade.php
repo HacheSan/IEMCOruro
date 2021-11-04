@@ -278,7 +278,8 @@
                     {
                         data: 'delete',
                         name: 'delete',
-                        orderable: false
+                        orderable: false,
+                        className: 'text-center'
                     },
                 ],
                 /*  order: [
