@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Economy extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'description',
+        'income',
+        'egress',
+        'date',
+        'total',
+        'type_id',
+        'member_id'
+    ];
 }

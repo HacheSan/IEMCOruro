@@ -22,19 +22,69 @@
                     <button class="btn btn-info btn-sm" onclick="addTypeEconomy()"><i class="fa fa-plus"></i></button>
                     <div class="btn-group btn-group-sm ml-2" role="group" aria-label="Basic example">
                         @foreach ($boxtypes as $data)
-                            <button type="button"
-                                class="btn btn-outline-primary {{ $loop->first ? 'active' : '' }}">{{ $data->type }}</button>
+                            <a href="javascript:void(0)" onclick="btnTypes({{ $data->id }})"
+                                id="btnType{{ $data->id }}" class="btn btn-outline-primary {{ $loop->first ? 'active' : '' }}">
+                                {{ $data->type }}
+                            </a>
+
                         @endforeach
                     </div>
+                    {{-- <select class="custom-select" id="type_id" required>
+
+                        @foreach ($boxtypes as $row)
+                            <option value="{{ $row->id }}" {{ $loop->first ? 'selected' : '' }}>{{ $row->type }}</option>
+                        @endforeach
+                    </select> --}}
+
                 </div>
 
             </div>
         </div>
     </section>
+
     <section>
         <div class="card">
             <div class="card-header">
-                <button class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Crear economía</button>
+
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-success btn-sm" onclick="addEconomy()"><i class="fa fa-plus"></i> Crear
+                                economía</button>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <select class="custom-select" name="member_id" id="member" required>
+                                <option selected disabled value="">Filtro por mes</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <select class="custom-select" name="member_id" id="member" required>
+                                <option selected disabled value="">Filtro por año</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <button class="btn btn-outline-dark btn-sm">Todo</button>
+                        </div>
+                    </div>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -56,7 +106,7 @@
 
         </div>
     </section>
-    <!-- Modal -->
+    <!-- Modal New Box Type -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -100,6 +150,103 @@
             </div>
         </div>
     </div>
+    <!-- Modal Economy -->
+    <div class="modal fade" id="modalEconomy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nueva Caja</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.economia.store') }}" method="POST" class="needs-validation" novalidate>
+                        @csrf
+                        <input type="text" name="type_id" id="typeId" value="1" hidden>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <label for="member">Nombre</label>
+                                <select class="custom-select" name="member_id" id="member" required>
+                                    <option selected disabled value="">Seleccione un Miembro...</option>
+                                    @foreach ($members as $row)
+                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    Debe seleccionar un miembro.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-3">
+                                <label for="description">Descripción</label>
+                                <input type="text" class="form-control" name="description" id="description" required
+                                    placeholder="Escriba una descripcion">
+                                <div class="invalid-feedback">
+                                    El campo descripción es obligatorio.
+                                </div>
+                            </div>
+                        </div>
+                        <label for="Rol" class="col-sm-12 col-form-label">Tipo de registro económico</label>
+                        <div class="form-group row d-flex justify-content-center">
+
+                            <div class="form-check col-sm-3">
+                                <input class="form-check-input" checked="checked" type="radio" name="role" value="1">
+                                <label class="form-check-label">Ingreso</label>
+                            </div>
+                            <div class="form-check col-sm-3">
+                                <input class="form-check-input" type="radio" name="role" value="2">
+                                <label class="form-check-label">Egreso</label>
+                            </div>
+                        </div>
+                        <div class="form-row" id="ingresoId">
+                            <div class="col-md-12 mb-3">
+                                <label for="income">Ingreso</label>
+                                <input type="number" min="0" class="form-control" name="income" id="income" value="0"
+                                    required placeholder="Escriba una ingreso">
+                                <div class="invalid-feedback">
+                                    El campo es obligatorio.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" id="egresoId" style="display:none;">
+                            <div class="col-md-12 mb-3">
+                                <label for="egress">Egreso</label>
+                                <input type="number" min="0" class="form-control" name="egress" id="egress" value="0"
+                                    required placeholder="Escriba una egreso">
+                                <div class="invalid-feedback">
+                                    El campo es obligatorio.
+                                </div>
+                                <div id="validateEgress" style="display:none;">
+                                    <span class="text-danger">
+                                        El egreso no debe exeder el total de la Caja.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                <label class="form-check-label" for="invalidCheck">
+                                    Acepto los términos y condiciones
+                                </label>
+                                <div class="invalid-feedback">
+                                    Debe aceptar antes de enviar.
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" id="btnRegisterEconomy" type="submit">Registrar
+                            economía</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button> --}}
+                    {{-- <button type="button" class="btn btn-primary">Agregar</button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -112,7 +259,7 @@
 @stop
 
 @section('js')
-{{-- <script src="//cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script> --}}
+    {{-- <script src="//cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script> --}}
     {{-- <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
     <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js'></script>
@@ -120,10 +267,54 @@
         src="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/b-print-1.4.0/datatables.min.js">
     </script> --}}
     {{-- <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script> --}}
+
     <script>
+        function btnTypes(id) {
+            var tam = {{ count($boxtypes) }};
+            for (var i = 1; i <= tam; i++) {
+                $("#btnType" + i).removeClass("active");
+            }
+            $("#btnType" + id).addClass("active");
+            $('#typeId').val(id);
+        }
+
+    </script>
+    <script>
+
         function addTypeEconomy() {
             $('#myModal').modal('show');
         }
+
+        function addEconomy() {
+            $('#modalEconomy').modal('show');
+            $('input:radio[name=role]').change(function() {
+                if (this.value == '1') {
+                    var ingreso = document.getElementById('ingresoId');
+                    ingreso.style.display = 'block';
+                    var egreso = document.getElementById('egresoId');
+                    egreso.style.display = 'none';
+                    $('#egress').removeAttr('required');
+                } else if (this.value == '2') {
+                    var egreso = document.getElementById('egresoId');
+                    egreso.style.display = 'block';
+                    var ingreso = document.getElementById('ingresoId');
+                    ingreso.style.display = 'none';
+                    $('#income').removeAttr('required');
+                }
+
+            });
+
+        }
+        $('#btnRegisterEconomy').on('click', function() {
+            //alert('hola');
+            var total = 500;//;
+                var egre = $('#egress').val();
+                alert(egre);
+                if(egre > total){
+                    var egreso = document.getElementById('validateEgress');
+                    egreso.style.display = 'block';
+                }
+        });
         //charge data table
         function mytable(activity_id) {
             var table = $('#tblEconomy').DataTable({
