@@ -49,7 +49,7 @@ class MemberController extends Controller
             'status'=>'required',
             'phone'=>'required|max:15',
             'date_of_birth'=>'required|max:15',
-            'image'=>'required',//|dimensions:min_width-150,min_height-150',
+            //'image'=>'required',//|dimensions:min_width-150,min_height-150',
             'post'=>'required',
         ]);
         /*public function messages()
@@ -97,7 +97,7 @@ class MemberController extends Controller
             'status'=>$request->get('status'),
             'phone'=>$request->phone,
             'date_of_birth'=>$request->date_of_birth,
-            'image'=>$request->image,
+            //'image'=>$request->image,
             'post'=>$request->post,
         ]);
         return redirect()->route('admin.miembros.index')->with('info', 'Los datos del miembro se creo Satisfactoriamente.');

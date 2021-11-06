@@ -18,7 +18,7 @@ class Member extends Model
         'status',
         'phone',
         'date_of_birth',
-        'image',
+        //'image',
         'post',
     ];
 }

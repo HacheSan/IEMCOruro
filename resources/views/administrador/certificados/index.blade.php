@@ -108,12 +108,14 @@
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <style>
         table.dataTable thead tr {
             background-color: rgb(49, 58, 55);
             color: #fff;
         }
+
     </style>
 @stop
 
@@ -127,8 +129,9 @@
             responsive: true,
 
             "language": {
-                "lengthMenu": "Mostrar registro por página " +
-                    '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">Todo</option></select>',
+                "lengthMenu": "Mostrar " +
+                    '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                    " registros por página",
                 "zeroRecords": "No existe registros - discupa",
                 "info": "Mostrando la pagina _PAGE_ de _PAGES_",
                 "infoEmpty": "No records available",
@@ -169,7 +172,7 @@
 
                         document.getElementById('findMember').style.display = '';
                         $('#member_id').val(json.id);
-                        $('#nameMember').html(json.name+' '+json.surname);
+                        $('#nameMember').html(json.name + ' ' + json.surname);
                         $('#ciMember').html(json.ci);
                     }
                 }

@@ -107,7 +107,7 @@
                 @error('date_of_birth')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
-                <div class="col-md-4 mt-2">
+                <!--<div class="col-md-4 mt-2">
                     <div class="form-group">
                         <label for="Imagen">Nombre Imagen</label>
                         <input class="form-control" placeholder="Nombre de la imagen" name="image" id="imagen" required>
@@ -115,10 +115,10 @@
                 </div>
                 @error('imagen')
                 <span class="text-danger">{{$message}}</span>
-                @enderror
+                @enderror-->
             </div>
     </div>
-    <div class="col-md-6 mt-2">
+    <!--<div class="col-md-6 mt-2">
         <div class="card bg-light text-dark">
 
 
@@ -131,7 +131,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 </div>
 <div class="card bg-dark">
     <div class="container-fluid h-100 mt-2">

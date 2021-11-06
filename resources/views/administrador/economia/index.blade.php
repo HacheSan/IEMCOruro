@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Economía</h1>
+    <h1>Gestión de Recursos Económicos</h1>
     @if (session('info'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Hey!</strong> {{ session('info') }}
@@ -155,7 +155,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nueva Caja</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Registro Económico</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

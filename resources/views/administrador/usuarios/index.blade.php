@@ -302,8 +302,9 @@
                 showing: false,
 
                 "language": {
-                    "lengthMenu": "Mostrar registro por página " +
-                        '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>',
+                    "lengthMenu": "Mostrar " +
+                        '<select class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="-1">All</option></select>' +
+                        " registros por página",
                     "zeroRecords": "No existe registros - discupa",
                     "info": "Mostrando la pagina _PAGE_ de _PAGES_",
                     "infoEmpty": "No records available",

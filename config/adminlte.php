@@ -257,11 +257,11 @@ return [
             'icon' => 'fas fa-fw fa-users-cog',
         ],
         [
-            'text' => 'Miembros',
+            'text' => 'Gestiòn Miembro',
             'icon' => 'fas fa-fw fa-users',
             'submenu'=>[
                 [
-                    'text' => 'Registro Miembros',
+                    'text' => 'Miembros',
                     'route'  => 'admin.miembros.index',
                     'icon' => 'fas fa-fw fa-user-tie',
                 ],

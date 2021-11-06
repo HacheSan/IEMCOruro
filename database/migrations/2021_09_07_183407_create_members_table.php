@@ -24,7 +24,7 @@ class CreateMembersTable extends Migration
             $table->string('status',15);
             $table->string('phone',15);
             $table->string('date_of_birth',15);
-            $table->string('image',150);
+           // $table->string('image',150);
             $table->string('post',150);//cargo
             $table->timestamps();
         });

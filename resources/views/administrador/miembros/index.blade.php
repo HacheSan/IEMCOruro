@@ -43,14 +43,14 @@
             @foreach ($members as $row)
                 <tr>
                     <td>{{ $row->id }}</td>
-                    <td class="row">
-                        <a href="{{ route('admin.miembros.edit', $row->id) }}" class="btn btn-info btn-xs"><i
+                    <td class="row d-flex justify-content-center" class="row">
+                        <a href="{{ route('admin.miembros.edit', $row->id) }}" class="btn btn-outline-primary btn-sm"><i
                                 class="fas fa-edit"></i>
                         </a>
                         <form action="{{ route('admin.miembros.destroy', $row->id) }}" method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-danger btn-xs"
+                            <button type="submit" class="btn btn-outline-danger btn-sm"
                                 onclick="return confirm('¿Seguro quiere eliminar?')">
                                 <i class="fas fa-trash"></i>
                             </button>
