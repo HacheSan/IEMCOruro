@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\BoxType;
 use App\Models\Economy;
 use App\Models\Member;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EconomyController extends Controller
 {
@@ -45,18 +47,73 @@ class EconomyController extends Controller
         $time = date("H:m");
         $datetime = $date . "T" . $time;
         //
-        $income_egress = 0;
-
-        $economy = Economy::create([
-            'type_id' => $request->get('type_id'),
-            'member_id' => $request->get('member_id'),
-            'description' => $request->description,
-            'date' => $datetime,
-            'income' => $request->income,
-            'egress' => $request->egress,
-            'total' => $income_egress
-        ]);
-        return redirect()->route('admin.economia.index')->with('info', 'Registro económico creado satisfactoriamente.');
+        $type_in = $request->type_in;
+        $income = $request->income;
+        $egress = $request->egress;
+        $total = Economy::where('type_id', $request->get('type_id'))->sum('total');
+        $ultimEc = Economy::where('type_id', $request->get('type_id'))->max('id');
+        $ultimTotal = Economy::where('id', $ultimEc)->first();
+        if($type_in == '1'){
+            if($income <= '0'){
+                $msg=[
+                    'type_id' => '0',
+                    'msg'=> 'El ingreso no puede ser menor a cero bolivianos',
+                ];
+                return json_encode($msg, JSON_FORCE_OBJECT);
+            }
+            $economy = Economy::create([
+                'type_id' => $request->get('type_id'),
+                'member_id' => $request->get('member_id'),
+                'description' => $request->description,
+                'date' => $datetime,
+                'income' => $income,
+                'egress' => '0',
+                'total' => (float)$ultimTotal->total+(float)$income,
+            ]);
+            return json_encode($economy, JSON_FORCE_OBJECT);
+        }else{
+            if($egress <= '0' || $egress > $total){
+                $msg=[
+                    'type_id' => '0',
+                    'msg'=> 'La salida no puede ser menor a cero o exceder a la caja.',
+                ];
+                return json_encode($msg, JSON_FORCE_OBJECT);
+            }
+            $economy = Economy::create([
+                'type_id' => $request->get('type_id'),
+                'member_id' => $request->get('member_id'),
+                'description' => $request->description,
+                'date' => $datetime,
+                'income' => '0',
+                'egress' => $egress,
+                'total' => $total-(float)$request->egress,
+            ]);
+            return json_encode($economy, JSON_FORCE_OBJECT);
+        }
+        //return redirect()->route('admin.economia.index')->with('info', 'Registro económico creado satisfactoriamente.');
+    }
+    public function tblEconomy(Request $request){
+        $type_id = $request->type_id;
+        if (request()->ajax()) {
+            return datatables()->of(DB::table('economies')
+                ->join('members', 'economies.member_id', '=', 'members.id')
+                ->where('type_id', $type_id)
+                //->where('date', '=', Carbon::now()->subMonth()->month)
+                ->get(array(
+                    'economies.id',
+                    'name',
+                    'surname',
+                    'description',
+                    'date',
+                    'income',
+                    'egress',
+                    'total',
+                )))
+                //->addColumn('delete', 'invoice.invoices.btndeleteinvoicetedail')
+                //->rawColumns(['delete'])
+                //->addIndexColumn()
+                ->make(true);
+        }
     }
     /**
      * Display the specified resource.

@@ -39,5 +39,5 @@ Route::post('reportassistance', [AssistanceController::class, 'reportAssistance'
 Route::post('updatecertificate', [CertificateController::class, 'update'])->name('admin.certificados.updatecertificate');
 
 Route::get('/admin/certificados/{id}/confirm', [CertificateController::class, 'destroyCertificate'])->name('admin.deletecertconfirm');
-
-
+//table economy
+Route::post('/admin/economia', [EconomyController::class, 'tblEconomy'])->name('admin.tbleconomy');
