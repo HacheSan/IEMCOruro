@@ -13,9 +13,6 @@
                     alt="" height="500" width="1500">
                 <div class="container">
                     <div class="carousel-caption text-left">
-                        <h1>Iglesia Evangelica Monte Calvario - Oruro</h1>
-                        <p>Con su PJ 458 18 - 19 -1999 Ubicada en Urb Pumas Andinos.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Registrate Hoy</a></p>
                     </div>
                 </div>
             </div>
@@ -24,9 +21,6 @@
                     alt="" height="500" width="1500">
                 <div class="container">
                     <div class="carousel-caption">
-                        <h1>Iglesia Evangelica Monte Calvario - Oruro.</h1>
-                        <p>CCon su PJ 458 18 - 19 -1999 Ubicada en Urb Pumas Andinos</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Aprende Más</a></p>
                     </div>
                 </div>
             </div>
@@ -34,11 +28,7 @@
                 <img src="https://th.bing.com/th/id/R.e66cd375151524fd937db76ed6cf55b8?rik=4LGKf%2bcM22lPnw&pid=ImgRaw&r=0"
                     alt="" height="500" width="1500">
                 <div class="container">
-                    <div class="carousel-caption text-right">
-                        <h1>Iglesia Evangelica Monte Calvario - Oruro</h1>
-                        <p>Con su PJ 458 18 - 19 -1999 Ubicada en Urb Pumas Andinos.</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Navegar Por La Galeria</a></p>
-                    </div>
+                    <div class="carousel-caption text-right"></div>
                 </div>
             </div>
         </div>
@@ -92,8 +82,8 @@
     <section id="our-team">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title wow fadeInDown">Encuentranos en</h2>
-                <p class="wow fadeInDown">Oruro - Zona sudeste ubanizacion Pumas Andinos.</p>
+                <h2 class="section-title wow fadeInDown"></h2>
+                <p class="wow fadeInDown"></p>
             </div>
         </div>
 

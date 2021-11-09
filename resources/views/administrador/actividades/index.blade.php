@@ -115,20 +115,6 @@
                             <th>Foto</th>
                         </tr>
                     </thead>
-                    <tbody>
-
-
-                        <tr>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                            <td>ff</td>
-                        </tr>
-
-                    </tbody>
                 </table>
                 <form id="userForm" name="userForm" class="form-horizontal" enctype="multipart/form-data">
 

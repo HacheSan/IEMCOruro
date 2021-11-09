@@ -27,12 +27,6 @@ class UserController extends Controller
         try {
             $term = 'Hache';
             $querys = Member::where('name', 'LIKE', '%' . $term . '%')->get();
-            //$querys = Antecedent::with('people', 'detective', 'crime', 'province')->where('arrestado', 'LIKE','%'.$term.'%')->get();
-            /* $querys = DB::table('people')
-            ->select('arrestado')
-            ->where('arrestado', 'LIKE','%'.$term.'%'); */
-            //->orWhere('ci','LIKE','%'.$term.'%');
-            //return $query;
             $data = [];
             foreach ($querys as $query) {
                 $data[] = [
@@ -95,7 +89,7 @@ class UserController extends Controller
             'email'=>$request->email,
             'password'=>Hash::make($request->email),
             'role'=>$request->role,
-    
+
         ]);
         return redirect()->route('admin.usuarios.index')->with('info', 'El rol se asignó Satisfactoriamente.');
     }
@@ -133,7 +127,7 @@ class UserController extends Controller
     {
         $usuario->update($request->all());
         return redirect()->route('admin.usuarios.index')->with('info', 'Los datos del Usuario se actualizó satisfactoriamente.');
-   
+
     }
 
     /**
@@ -144,7 +138,7 @@ class UserController extends Controller
      */
     public function destroy(User $usuario)
     {
-        $usuario->delete(); 
-        return redirect()->route('admin.usuarios.index')->with('info', 'Los datos del usuario se eliminó satisfactoriamente.');  
+        $usuario->delete();
+        return redirect()->route('admin.usuarios.index')->with('info', 'Los datos del usuario se eliminó satisfactoriamente.');
     }
 }
