@@ -335,21 +335,22 @@
                 data: form.serialize(),
                 success: function(data) {
                     $('#formEconomy')[0].reset();
-                    $('#modalEconomy').modal('hide');
+
                     var json = $.parseJSON(data); // create an object with the key of the array
                     //alert(json.type_id);
                     if (json.type_id == '0') {
                         document.getElementById('msgError').style.display = 'block';
-                        $('#msgErrorText').html(json.msg);
+                        $('#msgErrorText').html(json.msg);/*
                         setTimeout(function() {
                             document.getElementById('msgError').style.display = 'none';
-                        }, 5000);
+                        }, 5000); */
                     } else {
                         mytable(json.type_id);
                     }
+                    $('#modalEconomy').modal('hide');
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Algo salió mal.');
+                    alert('Algo salió mal a registrar economia.');
                 }
             })
             /* if (egre > total) {

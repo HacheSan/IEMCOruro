@@ -53,8 +53,21 @@ class EconomyController extends Controller
         $total = Economy::where('type_id', $request->get('type_id'))->sum('total');
         $ultimEc = Economy::where('type_id', $request->get('type_id'))->max('id');
         $ultimTotal = Economy::where('id', $ultimEc)->first();
-        if($type_in == '1'){
-            if($income <= '0'){
+        if($total == NULL){
+            $economy = Economy::create([
+                'type_id' => $request->get('type_id'),
+                'member_id' => $request->get('member_id'),
+                'description' => $request->description,
+                'date' => $datetime,
+                'income' => $income,
+                'egress' => '0',
+                'total' => $income,
+            ]);
+            return json_encode($economy, JSON_FORCE_OBJECT);
+        }
+
+        if($type_in == 1){
+            if($income <= 0){
                 $msg=[
                     'type_id' => '0',
                     'msg'=> 'El ingreso no puede ser menor a cero bolivianos',
@@ -72,7 +85,7 @@ class EconomyController extends Controller
             ]);
             return json_encode($economy, JSON_FORCE_OBJECT);
         }else{
-            if($egress <= '0' || $egress > $total){
+            if($egress <= 0 || $egress > $ultimEc){
                 $msg=[
                     'type_id' => '0',
                     'msg'=> 'La salida no puede ser menor a cero o exceder a la caja.',
@@ -86,7 +99,7 @@ class EconomyController extends Controller
                 'date' => $datetime,
                 'income' => '0',
                 'egress' => $egress,
-                'total' => $total-(float)$request->egress,
+                'total' => (float)$ultimTotal->total-(float)$request->egress,
             ]);
             return json_encode($economy, JSON_FORCE_OBJECT);
         }
