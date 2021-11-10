@@ -46,7 +46,7 @@
     <section>
         <div class="card">
             <div class="card-header">
-                <div id="msgError" class="alert alert-danger alert-dismissible fade show" style="display:none;"
+                <div id="msgError" class="alert alert-danger alert-dismissible fade show"
                     role="alert">
                     <strong>Ups!</strong><span id="msgErrorText"></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -59,7 +59,7 @@
                             economía</button>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <select class="custom-select" name="member_id" id="member" required>
+                        <select class="custom-select" name="member_id" id="bymounth" required>
                             <option selected disabled value="">Filtro por mes</option>
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
@@ -77,7 +77,7 @@
                         </select>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <select class="custom-select" name="member_id" id="member" required>
+                        <select class="custom-select" name="member_id" id="byyear" required>
                             <option selected disabled value="">Filtro por año</option>
                             <option value="2015">2015</option>
                             <option value="2016">2016</option>
@@ -94,22 +94,22 @@
                 </div>
             </div>
             <div class="card-body">
-                    <table id="tblEconomy" class="display nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Descripción</th>
-                                <th>Fecha</th>
-                                <th>Ingresos</th>
-                                <th>Egresos</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+                <table id="tblEconomy" class="display nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Ingresos</th>
+                            <th>Egresos</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
+        </div>
 
         </div>
     </section>
@@ -168,13 +168,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="text" name="type_id" id="typeId" value="1" hidden>
                     <form id="formEconomy" class="needs-validation" novalidate>
                         @csrf
-                        <input type="text" name="type_id" id="typeId" value="1" hidden>
+
                         <div class="form-row">
                             <div class="col-md-12 mb-3">
                                 <label for="member">Nombre</label>
-                                <select class="custom-select" name="member_id" id="member" required>
+                                <select class="custom-select" name="member_id" id="memberId" required>
                                     <option selected disabled value="">Seleccione un Miembro...</option>
                                     @foreach ($members as $row)
                                         <option value="{{ $row->id }}">{{ $row->name }}</option>
@@ -270,8 +271,8 @@
 
 @section('js')
     <script src="//cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
-   <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-     {{-- <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
     <script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js'></script>
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/b-print-1.4.0/datatables.min.js">
@@ -290,6 +291,7 @@
         }
     </script>
     <script>
+        document.getElementById('msgError').style.visibility = 'hidden';
         mytable(1);
 
         function addTypeEconomy() {
@@ -325,61 +327,48 @@
                     return;
                 }
             }
-            var total = 500; //;
-            var egre = $('#egress').val();
+
+            let type_id = $('#typeId').val();
+            let member_id = memberId.value;
+            let description = $('#description').val();
+            let type_in = $('#typeIn').val();
+            let income = $('#income').val();
+            let egress = $('#egress').val();
             e.preventDefault();
             var form = $('#formEconomy');
             $.ajax({
                 url: "{{ route('admin.economia.store') }}",
                 type: 'POST',
-                data: form.serialize(),
+                data: {
+                        //data: form.serialize(),
+                        member_id: member_id,
+                        type_id: type_id,
+                        description: description,
+                        type_in: type_in,
+                        income,
+                        egress
+                },
                 success: function(data) {
-                    $('#formEconomy')[0].reset();
-
+                    //$('#formEconomy')[0].reset();
+                    $('#modalEconomy').modal('hide');
                     var json = $.parseJSON(data); // create an object with the key of the array
                     //alert(json.type_id);
                     if (json.type_id == '0') {
-                        document.getElementById('msgError').style.display = 'block';
-                        $('#msgErrorText').html(json.msg);/*
+                        document.getElementById('msgError').style.visibility = 'visible';
+                        $('#msgErrorText').html(json.msg);
                         setTimeout(function() {
-                            document.getElementById('msgError').style.display = 'none';
-                        }, 5000); */
+                                document.getElementById('msgError').style.visibility = 'hidden';
+                            }, 5000);
+
                     } else {
                         mytable(json.type_id);
                     }
-                    $('#modalEconomy').modal('hide');
+
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     alert('Algo salió mal a registrar economia.');
                 }
             })
-            /* if (egre > total) {
-                var egreso = document.getElementById('validateEgress');
-                egreso.style.display = 'block';
-            } else {
-
-                var form = $('#formEconomy');
-                $.ajax({
-                    url: "{{ route('admin.economia.store') }}",
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function(data) {
-                        $('#formEconomy')[0].reset();
-                        $('#modalEconomy').modal('hide');
-                        var json = $.parseJSON(data); // create an object with the key of the array
-                        //alert(json.type_id);
-                        if (json.type_id == '0') {
-                            document.getElementById('msgError').style.display = 'block';
-                            $('#msgErrorText').html(json.msg);
-                        } else {
-                            mytable(json.type_id);
-                        }
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert('Algo salió mal.');
-                    }
-                })
-            } */
         });
         //charge data table
 
