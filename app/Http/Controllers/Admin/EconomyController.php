@@ -72,6 +72,7 @@ class EconomyController extends Controller
                     'egress' => '0',
                     'total' => $income,
                 ]);
+
                 return json_encode($economy, JSON_FORCE_OBJECT);
             }
             $economy = Economy::create([
@@ -106,11 +107,15 @@ class EconomyController extends Controller
         //return redirect()->route('admin.economia.index')->with('info', 'Registro económico creado satisfactoriamente.');
     }
     public function tblEconomy(Request $request){
+        $month = $request->month;
+        $year = $request->year;
         $type_id = $request->type_id;
         if (request()->ajax()) {
             return datatables()->of(DB::table('economies')
                 ->join('members', 'economies.member_id', '=', 'members.id')
                 ->where('type_id', $type_id)
+                ->whereMonth('date', '=', $month)
+                ->whereYear('date', '=', $year)
                 //->where('date', '=', Carbon::now()->subMonth()->month)
                 ->get(array(
                     'economies.id',

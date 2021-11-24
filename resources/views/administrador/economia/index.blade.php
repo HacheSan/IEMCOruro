@@ -46,17 +46,13 @@
     <section>
         <div class="card">
             <div class="card-header">
-                <div id="msgError" class="alert alert-danger alert-dismissible fade show"
-                    role="alert">
-                    <strong>Ups!</strong><span id="msgErrorText"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="form-row">
                     <div class="col-md-3 mb-3">
                         <button class="btn btn-success btn-sm" onclick="addEconomy()"><i class="fa fa-plus"></i> Crear
                             economía</button>
+                    </div>
+                    <div>
+                        <h3><span id="date"></span></h3>
                     </div>
                     <div class="col-md-3 mb-3">
                         <select class="custom-select" name="member_id" id="bymounth" required>
@@ -88,9 +84,9 @@
                             <option value="2021">2021</option>
                         </select>
                     </div>
-                    <div class="col-md-3 mb-3">
-                        <button class="btn btn-outline-dark btn-sm">Todo</button>
-                    </div>
+                    {{-- <div class="col-md-3 mb-3">
+                        <button class="btn btn-outline-dark btn-sm" onclick="selectAll()">Todo</button>
+                    </div> --}}
                 </div>
             </div>
             <div class="card-body">
@@ -108,6 +104,12 @@
                         </tr>
                     </thead>
                 </table>
+                <hr>
+                <div>
+                    <h5>Total Ingreso: <span class="text-secondary" id="totalIncome">0</span></h5>
+                    <h5>Total Salida: <span class="text-secondary" id="totalEgress">0</span></h5>
+                    <h5>Saldo Actual: <span class="text-primary" id="totalActual">0</span></h5>
+                </div>
             </div>
         </div>
 
@@ -278,10 +280,13 @@
         src="https://cdn.datatables.net/v/dt/jq-2.2.4/pdfmake-0.1.27/dt-1.10.15/b-1.4.0/b-colvis-1.4.0/b-html5-1.4.0/b-print-1.4.0/datatables.min.js">
     </script> --}}
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.11.3/api/sum().js"></script>
 
     <script>
         function btnTypes(id) {
-            mytable(id);
+
+            mytable(id, bymounth.value, byyear.value);
             var tam = {{ count($boxtypes) }};
             for (var i = 1; i <= tam; i++) {
                 $("#btnType" + i).removeClass("active");
@@ -291,8 +296,31 @@
         }
     </script>
     <script>
-        document.getElementById('msgError').style.visibility = 'hidden';
-        mytable(1);
+        //document.getElementById('msgError').style.visibility = 'hidden';
+        var months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+            '11', '12'
+        ];;
+        var date = new Date();
+        $("select#bymounth").val(months[date.getMonth()]);
+        $("select#byyear").val(date.getFullYear());
+
+        $("select#bymounth").change(function() {
+            var month = bymounth.value
+            let type_id = $('#typeId').val();
+            mytable(type_id, month, byyear.value)
+        });
+        $("select#byyear").change(function() {
+            var year = byyear.value
+            let type_id = $('#typeId').val();
+            mytable(type_id, bymounth.value, year)
+        });
+        /* function selectAll(){
+            let type_id = $('#typeId').val();
+            mytable(type_id, "", "")
+        } */
+
+        mytable(1, bymounth.value, byyear.value);
+
 
         function addTypeEconomy() {
             $('#myModal').modal('show');
@@ -340,28 +368,49 @@
                 url: "{{ route('admin.economia.store') }}",
                 type: 'POST',
                 data: {
-                        //data: form.serialize(),
-                        member_id: member_id,
-                        type_id: type_id,
-                        description: description,
-                        type_in: type_in,
-                        income,
-                        egress
+                    //data: form.serialize(),
+                    member_id: member_id,
+                    type_id: type_id,
+                    description: description,
+                    type_in: type_in,
+                    income,
+                    egress
                 },
                 success: function(data) {
                     //$('#formEconomy')[0].reset();
+
                     $('#modalEconomy').modal('hide');
                     var json = $.parseJSON(data); // create an object with the key of the array
                     //alert(json.type_id);
                     if (json.type_id == '0') {
-                        document.getElementById('msgError').style.visibility = 'visible';
-                        $('#msgErrorText').html(json.msg);
-                        setTimeout(function() {
-                                document.getElementById('msgError').style.visibility = 'hidden';
-                            }, 5000);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error....',
+                            text: json.msg,
+                        });
+
+                        /* setTimeout(function() {
+                            //document.getElementById('msgError').style.visibility = 'hidden';
+                        }, 5000); */
 
                     } else {
-                        mytable(json.type_id);
+                        if (json.egress == '0') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'OK',
+                                text: 'Ingreso registrado satisfactoriamente!',
+                            })
+                            /* .then(() => {
+                                                            location.reload();
+                                                        }); */
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'OK',
+                                text: 'Salida registrado satisfactoriamente!',
+                            })
+                        }
+                        mytable(json.type_id, bymounth.value, byyear.value);
                     }
 
                 },
@@ -372,7 +421,7 @@
         });
         //charge data table
 
-        function mytable(type_id) {
+        function mytable(type_id, month ,year) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -446,6 +495,8 @@
                     type: 'POST',
                     data: {
                         type_id: type_id,
+                        month: month,
+                        year: year,
                     },
                     cache: false,
 
@@ -489,6 +540,14 @@
                 /*  order: [
                      [0, 'desc']
                  ], */
+                drawCallback: function() {
+                    var income = $('#tblEconomy').DataTable().column(5).data().sum();
+                    var egress = $('#tblEconomy').DataTable().column(6).data().sum();
+
+                    $('#totalIncome').html(income);
+                    $('#totalEgress').html(egress);
+                    $('#totalActual').html(income - egress);
+                },
             });
 
         }

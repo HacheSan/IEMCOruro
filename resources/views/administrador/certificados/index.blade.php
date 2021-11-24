@@ -28,7 +28,7 @@
                 <th>Descripción</th>
 
                 <th>Fecha</th>
-                <th>Entregado</th>
+                <th class="text-center">Entregado</th>
             </tr>
         </thead>
         <tbody>
@@ -36,19 +36,37 @@
                 <tr>
                     <td>{{ $row->id }}</td>
                     <td>
-                        <button onclick="updateCetificate('{{ $row->id }}')" class="btn btn-info btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <a onclick="return confirm('¿Seguro quiere eliminar?')"
-                            href="{{ route('admin.deletecertconfirm', $row->id) }}" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash-alt"></i>
-                        </a>
+                        @if ($row->status != 'No')
+                            <button onclick="updateCetificate('{{ $row->id }}')" class="btn btn-success btn-sm" disabled>
+                                <i class="fas fa-certificate"></i>
+                            </button>
+                            <a onclick="return confirm('¿Seguro quiere eliminar?')"
+                                href="{{ route('admin.deletecertconfirm', $row->id) }}" class="btn btn-danger btn-sm" style="pointer-events: none;
+                                opacity: 0.5;">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        @else
+                            <button onclick="updateCetificate('{{ $row->id }}')" class="btn btn-success btn-sm">
+                                <i class="fas fa-certificate"></i>
+                            </button>
+                            <a onclick="return confirm('¿Seguro quiere eliminar?')"
+                                href="{{ route('admin.deletecertconfirm', $row->id) }}" class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        @endif
+
                     </td>
 
                     <td>{{ $row->name }} {{ $row->surname }}</td>
                     <td>{{ $row->description }}</td>
                     <td>{{ $row->date }}</td>
-                    <td>{{ $row->status }}</td>
+                    <td class="text-center">
+                        @if ($row->status != 'No')
+                            <span class="badge bg-success">{{ $row->status }}</span>
+                        @else
+                            <span class="badge bg-secondary">{{ $row->status }}</span>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>

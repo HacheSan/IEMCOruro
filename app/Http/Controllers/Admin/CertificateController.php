@@ -48,7 +48,7 @@ class CertificateController extends Controller
             'date' => $date,
             'status' => "No",
         ]);
-        return redirect()->route('admin.certificados.index')->with('info', 'Se entregó el certificado Satisfactoriamente.');
+        return redirect()->route('admin.certificados.index')->with('info', 'Miembro encontrado para la entrega del certificado.');
     }
 
     /**
@@ -99,6 +99,6 @@ class CertificateController extends Controller
     {
         $mensaje = ActivityDetail::findOrFail($id);
         $mensaje->delete();
-        return redirect()->route('admin.certificados.index')->with('info', 'Eliminación del certificado exitosa. '.$mensaje);
+        return redirect()->route('admin.certificados.index')->with('info', 'Eliminación procesada');
     }
 }
